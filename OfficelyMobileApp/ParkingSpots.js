@@ -8,11 +8,23 @@ const DATA = [
       title: 'Parking Spot 1',
     },
     {
+      id: '3ac68sdafc-c605-48d3-a4f8-fbd91aa97f63',
+      title: 'Parking Spot 2',
+    },
+    {
+      id: '58694a0sdsf-3da1-471f-bd96-145571e29d72',
+      title: 'Parking Spot 3',
+    },
+    {
+      id: 'bd7acbesda-c1b1-46c2-aed5-3ad53abb28ba',
+      title: 'Parking Spot 1',
+    },
+    {
       id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
       title: 'Parking Spot 2',
     },
     {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
+      id: '58694sda0f-3da1-471f-bd96-145571e29d72',
       title: 'Parking Spot 3',
     },
   ];
@@ -69,7 +81,7 @@ itemContainer: {
     overflow: 'hidden',
     marginHorizontal: 20,
     marginBottom: 20,
-    elevation: 5, // Dodaj cień dla efektu podniesienia
+    elevation: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -81,12 +93,11 @@ item: {
     marginBottom: 20,
 },
 itemTitle: {
-    fontSize: 32,
+    fontSize: 22,
     margin: 20,
 },
 title: {
-    fontFamily: 'Cochin',
-    fontSize: 40,
+    fontSize: 30,
     fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',

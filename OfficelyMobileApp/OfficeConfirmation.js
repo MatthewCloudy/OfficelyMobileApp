@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useState } from 'react';
 
 
@@ -11,7 +11,7 @@ export function OfficeConfirmation() {
 
 
     return (
-        <View style={styles.main}>
+        <ScrollView style={styles.main}>
             <View>
                 <View>
                     <Text style={styles.title}>Office - details</Text>
@@ -41,7 +41,7 @@ export function OfficeConfirmation() {
                 </View>
             </View>
             
-        </View>
+        </ScrollView>
         
     );
   }
@@ -88,13 +88,11 @@ button: {
     paddingHorizontal: 20,
   },
 buttonText: {
-    fontFamily: 'Cochin',
     color: '#fff',
     fontSize: 15,
     textAlign: 'center',
   },
 title: {
-    fontFamily: 'Cochin',
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',

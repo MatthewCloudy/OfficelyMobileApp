@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { useState } from 'react';
 
 const image = require('./assets/officePicture.jpg');
@@ -23,6 +23,7 @@ export function HomePage() {
 
     return (
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
+            <ScrollView >
             <View >
             <View>
                 <Text style={styles.title}>Officely</Text>
@@ -46,6 +47,8 @@ export function HomePage() {
                 </TouchableOpacity>
             </View>
         </View>
+            </ScrollView>
+
 
         </ImageBackground>
         
@@ -93,13 +96,11 @@ button: {
     paddingHorizontal: 20,
   },
 buttonText: {
-    fontFamily: 'Cochin',
     color: '#fff',
     fontSize: 15,
     textAlign: 'center',
   },
 title: {
-    fontFamily: 'Cochin',
     fontSize: 40,
     fontWeight: 'bold',
     color: '#333',
