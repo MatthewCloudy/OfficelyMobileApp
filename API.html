@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actuator Data Fetcher</title>
+</head>
+<body>
+
+    <h1>Actuator Endpoint Data</h1>
+
+    <form id="tokenForm">
+        <label for="token">Bearer Token:</label>
+        <input type="text" id="token" />
+        <button type="button" onclick="uploadPhoto()">Fetch Data</button>
+    </form>
+    <form >
+        <div>
+          <label>Select file to upload</label>
+          <input type="file">
+        </div>
+        <button type="button" onclick="uploadPhoto()">Convert</button>
+      </form>
+    <div id="actuatorData"></div>
+    <form action="http://localhost:8080/office/1/thumbnail" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <input type="text" name="token" placeholder="Authentication Token" />
+        <input type="submit" value="Upload" />
+    </form>
+    <div id="photoContainer">
+        <!-- The image will be displayed here -->
+    </div>
+    <script src="API-Client.js">
+        
+
+        // function fetchData() {
+        //     const tokenInput = document.getElementById('token');
+        //     const token = 12345;
+
+        //     fetch('http://localhost:8080/auth/login', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json', // Add other headers if needed
+        //         },
+        //         body: JSON.stringify({ 
+        //             username: 'marcin',
+        //             password: 'marcin'
+        //          }),
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         displayData(data);
+        //     })
+        //     .catch(error => {
+        //         console.error('Error fetching data:', error);
+        //     });
+        // }
+
+
+        function displayData(data) {
+            const actuatorDataElement = document.getElementById('actuatorData');
+
+            // Convert the data object to a JSON string for display
+            const formattedData = JSON.stringify(data, null, 2);
+
+            actuatorDataElement.innerText = formattedData;
+        }
+    </script>
+</body>
+</html>
