@@ -1,8 +1,7 @@
-
-class APIClient {
+export class APIClient {
     constructor() {
       this.token = null;
-      this.url = 'http://localhost:8080'
+      this.url = 'https://officely.azurewebsites.net/'
     }
   
     async login(username, password) {
@@ -27,6 +26,27 @@ class APIClient {
       }
     }
   
+    async logout()
+    {
+      try{     
+        const response = await fetch(`${this.url}/auth/logout`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.token}`,
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.statusText}`);
+        }
+        return response;
+      } catch (error) {
+        console.error('Authenticated request failed:', error.message);
+        throw error;
+      }
+    }
+
     async sendAuthenticatedRequest(url, method = 'GET', body = null) {
       if (!this.token) {
         console.error('User not authenticated');
@@ -86,45 +106,4 @@ class APIClient {
         throw error;
       }
     }
-  }
-  
-  const authService = new APIClient();
-  
-    authService.login('marcin', 'marcin')
-    .then(() => {
-      console.log('Login successful');
-      authService.sendAuthenticatedRequest('http://localhost:8080/offices/1/thumbnail').then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.blob();
-    })
-    .then(blob => {
-        // Convert the Blob to a data URL
-        const imageUrl = URL.createObjectURL(blob);
-
-        // Display the image in the container
-        const photoContainer = document.getElementById('photoContainer');
-        const imageElement = document.createElement('img');
-        imageElement.src = imageUrl;
-        photoContainer.appendChild(imageElement);
-    })
-    .catch(error => {
-        console.error('Error fetching photo:', error);
-    });
-
-  })
-  .catch(error => {
-    console.error('Login failed:', error.message);
-  });
-
-  uploadPhoto = () => {
-    authService.uploadPhoto()
-    // authService.uploadPhoto()
-    // .then(() => {
-    //   console.log('Photo upload successful');
-    // })
-    // .catch(error => {
-    //   console.error('Photo upload failed:', error.message);
-    // });
   }
