@@ -1,5 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+
+import { APIClient } from './API/APIClient';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -10,7 +13,17 @@ import { OfficeConfirmation } from './OfficeConfirmation';
 
 const Stack = createStackNavigator();
 
+
 export default function App() {
+
+  let apiClient = new APIClient();
+  apiClient.login('admin', 'admin').then(() => {
+    console.log('Login successful');
+    apiClient.logout().then(() => {
+      console.log('Logout successful');
+    })
+  });
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="ParkingSpots">
