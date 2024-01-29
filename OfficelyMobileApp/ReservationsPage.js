@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 
-const ReservationItem = ({ item }) => (
+export const ReservationItem = ({ item }) => (
     <View style={styles.flex}>
         <Image source={item.photo} style={styles.photo} />
 

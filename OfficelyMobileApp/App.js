@@ -10,6 +10,9 @@ import { HomePage } from './HomePage';
 import { ParkingSpots } from './ParkingSpots';
 import { ParkingConfirmation } from './ParkingConfirmation';
 import { OfficeConfirmation } from './OfficeConfirmation';
+import { ProfilePage } from './ProfilePage';
+import { ReservationsPage } from './ReservationsPage';
+import { SavedOfficesPage } from './SavedOfficesPage';
 
 const Stack = createStackNavigator();
 
@@ -26,11 +29,14 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ParkingSpots">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />
         <Stack.Screen name="OfficeConfirmation" component={OfficeConfirmation} />
+        <Stack.Screen name="ProfilePage" component={ProfilePage} />
+        <Stack.Screen name="ReservationsPage" component={ReservationsPage} />
+        <Stack.Screen name="SavedOfficesPage" component={SavedOfficesPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
