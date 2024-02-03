@@ -1,15 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { useState } from 'react';
+import MapView, { Marker } from 'react-native-maps';
+import { useStore } from './store.js';
 
 const image = require('./assets/officePicture.jpg');
 
 export function HomePage() {
 
-    const [name, setName] = useState();
-    const [location, setLocation] = useState();
-    const [proximity, setProximity] = useState();
-    const [area, setArea] = useState();
+    const {
+        pageSize, setPageSize,
+        pageNum, setPageNum,
+        latitude, setLatitude,
+        longitude, setLongitude,
+        availableFrom, setAvailableFrom,
+        availableTo, setAvailableTo,
+        maxDistance, setMaxDistance,
+        name, setName,
+        minPrice, setMinPrice,
+        maxPrice, setMaxPrice,
+        amenities, setAmenities,
+        officeType, setOfficeType,
+        minRating, setMinRating,
+        minArea, setMinArea,
+        sort, setSort,
+        sortOrder, setSortOrder,
+      } = useStore();
 
     const handleSignIn = () => {
         // navigate do rejestracji
@@ -20,6 +36,23 @@ export function HomePage() {
     const handleSubmit = () => {
         // get po wyniki i navigate do listy ofert
     };
+
+    const [selectedLocation, setSelectedLocation] = useState({
+        latitude: 52.2297, // Warszawa, szerokość geograficzna
+        longitude: 21.0122, // Warszawa, długość geograficzna
+      });
+    
+      const handleMapPress = (event) => {
+        const { coordinate } = event.nativeEvent;
+        setLatitude(coordinate.latitude);
+        setLongitude(coordinate.longitude);
+        
+        setSelectedLocation({
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+        });
+      };
+
 
     return (
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
@@ -38,10 +71,28 @@ export function HomePage() {
                 </TouchableOpacity>
             </View>
             <View style={styles.container}>
-                <TextInput style={styles.input} value={name} placeholder="Name" onChangeText={(e) => setName(e.target)}/>
-                <TextInput style={styles.input} value={location} placeholder="Location" onChangeText={(e) => setLocation(e.target)}/>
-                <TextInput style={styles.input} value={proximity} placeholder="Proximity [km]" onChangeText={(e) => setProximity(e.target)}/>
-                <TextInput style={styles.input} value={area} placeholder="Area [m²]" onChangeText={(e) => setArea(e.target)}/>
+                <TextInput style={styles.input} value={maxDistance} keyboardType="numeric" placeholder="Proximity [km]" onChangeText={(e) => setMaxDistance(e.target)}/>
+                <TextInput style={styles.input} value={minArea} keyboardType="numeric" placeholder="Area [m²]" onChangeText={(e) => setMinArea(e.target)}/>
+                <TextInput style={styles.input} value={maxPrice} keyboardType="numeric" placeholder="Max price [PLN]" onChangeText={(e) => setMaxPrice(e.target)}/>
+                <View style={{ flex: 1,  height:300, width: 300}}>
+                    <MapView
+                        style={{ flex: 1}}
+                        initialRegion={{
+                        latitude: 52.2297, // Warszawa, szerokość geograficzna
+                        longitude: 21.0122, // Warszawa, długość geograficzna
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                        }}
+                        onPress={handleMapPress}
+                    >
+                        <Marker
+                        coordinate={{
+                            latitude: selectedLocation.latitude,
+                            longitude: selectedLocation.longitude,
+                        }}
+                        />
+                    </MapView>
+                </View>
                 <TouchableOpacity style={styles.button} onPress={handleSubmit}>
                     <Text style={styles.buttonText}>Submit</Text>
                 </TouchableOpacity>
@@ -90,7 +141,7 @@ buttonContainer: {
     marginBottom: 20,
 },
 button: {
-    backgroundColor: '#494d52',
+    backgroundColor: '#272829',
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
@@ -101,9 +152,9 @@ buttonText: {
     textAlign: 'center',
   },
 title: {
-    fontSize: 40,
+    fontSize: 70,
     fontWeight: 'bold',
-    color: '#333',
+    color: '#272829',
     textAlign: 'center',
     marginBottom: 20,
   },
