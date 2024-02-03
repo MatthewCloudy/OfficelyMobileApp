@@ -21,7 +21,7 @@ Join us in this thriving workspace where every detail is crafted to elevate your
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-const OfferDetailsPage = () => {
+export const OfferDetailsPage = () => {
   const [offerData, setOfferData] = useState({
     image: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
     name: 'My First Office',
