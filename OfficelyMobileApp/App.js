@@ -18,15 +18,6 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-
-  let apiClient = new APIClient();
-  apiClient.login('admin', 'admin').then(() => {
-    console.log('Login successful');
-    apiClient.logout().then(() => {
-      console.log('Logout successful');
-    })
-  });
-
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">

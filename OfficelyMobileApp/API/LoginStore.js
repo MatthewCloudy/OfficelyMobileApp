@@ -1,15 +1,25 @@
 import { create } from 'zustand'
-import Cookies from 'js-cookie';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const url = 'https://officely.azurewebsites.net';
 
 // TODD: check if user is admin, probably it will be done server side 
-const LoginStore = create((set) => ({
-	jwttoken: Cookies.get('jwttoken'),
+const LoginStore = create((set) => 
+{
+    const [data, setData] = useState("");
+
+        useEffect(() => {
+            AsyncStorage.getItem('jwttoken').then((value) => {
+                setData(value);
+              });
+        }, []);
+
+    return {
+	jwttoken: data,
     setToken: 
         (jwttoken) => 
         {
-            Cookies.set('jwttoken', jwttoken, { expires: 1 })
+            AsyncStorage.setItem('jwttoken', jwttoken);
             set({ jwttoken })
         },
 	login: 
@@ -50,13 +60,14 @@ const LoginStore = create((set) => ({
                   throw new Error(`Request failed: ${response.statusText}`);
                 }
                 set({ jwttoken: "" })
-                Cookies.remove('jwttoken');
+                AsyncStorage.removeItem('cookieName');
                 return response;
             } catch (error) {
                 console.error('Authenticated request failed:', error.message);
                 throw error;
             }
         }
-}))
+
+}});
 
 export default LoginStore;
