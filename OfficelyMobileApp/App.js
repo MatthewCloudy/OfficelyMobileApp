@@ -10,7 +10,7 @@ import { HomePage } from './HomePage';
 import { ParkingSpots } from './ParkingSpots';
 import { ParkingConfirmation } from './ParkingConfirmation';
 import { OfficeConfirmation } from './OfficeConfirmation';
-import { ProfilePage } from './ProfilePage';
+import { ProfilePage } from './pages/profile/ProfilePage';
 import { ReservationsPage } from './ReservationsPage';
 import { SavedOfficesPage } from './SavedOfficesPage';
 

@@ -16,13 +16,21 @@ const LoginStore = create((set) =>
 
     return {
 	jwttoken: data,
-    user: {},
+    user: {id:0, username: "", email: "", isAdmin: false},
     updateData:
         (data) =>
         {
             set({ jwttoken: data.jwttoken, user: data.user})
             AsyncStorage.setItem('jwttoken', data.jwttoken);
         },
+    fetchUser:
+        async () => fetch(`${url}/users/${LoginStore.getState().user.id}`, {
+            method: 'GET',
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json',
+                'Authorizatiox': `Bearer ${LoginStore.getState().jwttoken}`
+        }}),
 	login: 
         async (username, password) => 
         {

@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
+import LoginStore from '../../API/LoginStore';
 
 export function ProfilePage({ nafigation })
 {
+    const [user, setUser] = useState(LoginStore.getState().user);
+
     useEffect(() => {
-        // fetch user data
+        LoginStore.getState().fetchUser()
+        .then((response) => response.json())
+        .then((data) => {
+            setUser(data.user);
+            LoginStore.getState().updateData(old => ({...old, user: data.user}));
+        })
+        .catch((error) => console.error('Error:', error));
     }, []);
 
     return (
@@ -21,10 +30,11 @@ export function ProfilePage({ nafigation })
             <View style={{height: 60}}/>
 
             <Image source={require('./assets/profilePhoto.jpg')} style={styles.photo} />
-            <Text style={styles.username}>Marcin User</Text>
-            <Text style={styles.email}>marcin@marcin.marcin</Text>
+            <Text style={styles.username}>{user.username}</Text>
+            <Text style={styles.email}>{user.email}</Text>
+
             <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Change email</Text>
+                <Text style={styles.buttonText}>Update profile</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.button}>
                 <Text style={styles.buttonText}>Change Password</Text>
