@@ -6,17 +6,9 @@ const url = 'https://officely.azurewebsites.net';
 
 const LoginStore = create((set) => 
 {
-    const [data, setData] = useState("");
-
-        useEffect(() => {
-            AsyncStorage.getItem('jwttoken').then((value) => {
-                setData(value);
-              });
-        }, []);
-
     return {
-	jwttoken: data,
-    user: {id:0, username: "", email: "", isAdmin: false},
+	jwttoken: "",
+    user: {id:0, username: "Marcin", email: "marcin@marcin.pl", isAdmin: false},
     updateData:
         (data) =>
         {

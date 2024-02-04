@@ -27,9 +27,9 @@ export const ReservationItem = ({ item }) => (
 export function ReservationsPage({navigation})
 {
     const reservations = [
-        { id: 1, title: 'Reservation 1', description: 'Description 1', photo: require('./assets/profilePhoto.jpg') },
-        { id: 2, title: 'Reservation 2', description: 'Description 2', photo: require('./assets/profilePhoto.jpg') },
-        { id: 3, title: 'Reservation 3', description: 'Description 3', photo: require('./assets/profilePhoto.jpg') },
+        { id: 1, title: 'Reservation 1', description: 'Description 1', photo: require('../../assets/profilePhoto.jpg') },
+        { id: 2, title: 'Reservation 2', description: 'Description 2', photo: require('../../assets/profilePhoto.jpg') },
+        { id: 3, title: 'Reservation 3', description: 'Description 3', photo: require('../../assets/profilePhoto.jpg') },
     ];
 
     return (
