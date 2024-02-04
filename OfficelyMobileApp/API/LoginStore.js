@@ -14,6 +14,7 @@ const LoginStore = create((set) =>
         {
             set({ jwttoken: data.jwttoken, user: data.user})
             AsyncStorage.setItem('jwttoken', data.jwttoken);
+            AsyncStorage.setItem('user', JSON.stringify(data.user));
         },
     fetchUser:
         async () => fetch(`${url}/users/${LoginStore.getState().user.id}`, {
