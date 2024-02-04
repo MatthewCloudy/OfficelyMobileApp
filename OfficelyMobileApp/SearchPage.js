@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Button, Keyboard } from 'react-native';
 import StarRating from 'react-native-star-rating';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import OfficeStore from './API/OfficeStore';
+import LoginStore from './API/LoginStore';
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-
-
 
 export function SearchPage()  {
   const [address, setAddress] = useState('');
@@ -16,6 +16,22 @@ export function SearchPage()  {
   const [endDate, setEndDate] = useState(new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)));
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
+
+  const [offices, setOffices] = useState(OfficeStore.getState().offices);
+  useEffect(() => {
+    // Fetch offices, page 0, page size 10
+    if(LoginStore.getState().jwttoken)
+      OfficeStore.getState().fetchOffices(10, 0)
+      .then(response => response.json())
+      .then(data => 
+        {
+          OfficeStore.getState().setOffices(data);
+          setOffices(data);
+          console.log(data);
+        }
+      )
+      .catch(error => console.error('Error:', error));
+  }, []);
 
   // Dummy data for offers
   const offers = [

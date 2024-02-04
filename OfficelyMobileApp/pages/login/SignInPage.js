@@ -12,7 +12,7 @@ export function SignInPage() {
         LoginStore.getState().login(username, password)
         .then(() => {
             // TODO: navigate to home page
-            navigation.navigate('ProfilePage');
+            navigation.navigate('SearchPage');
         })
         .catch((error) => {
             console.error('Error:', error);
