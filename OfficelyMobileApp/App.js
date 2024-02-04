@@ -13,8 +13,8 @@ import { OfficeConfirmation } from './OfficeConfirmation';
 import { ProfilePage } from './pages/profile/ProfilePage';
 import { ReservationsPage } from './pages/reservations/ReservationsPage';
 import { SavedOfficesPage } from './SavedOfficesPage';
-import { SignInPage } from './SignInPage';
-import { SignUpPage } from './SignUpPage';
+import { SignInPage } from './pages/login/SignInPage';
+import { SignUpPage } from './pages/login/SignUpPage.js';
 import { SearchPage } from './SearchPage.js';
 import { OfferDetailsPage } from './OfferDetailsPage.js'
 
@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ReservationsPage">
+      <Stack.Navigator initialRouteName="SignUpPage">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />

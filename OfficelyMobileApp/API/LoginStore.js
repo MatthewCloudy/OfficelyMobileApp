@@ -46,24 +46,24 @@ const LoginStore = create((set) =>
             }
         },
     register:
-        async (username, emial, password) =>
+        async (username, email, password) =>
         {
             try {
+                console.log(JSON.stringify([{id:0, username, password, email, isAdmin: false}]))
                 const response = await fetch(`${url}/users`, {
                 method: 'POST',
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id:0, username, password, email, isAdmin: false}),
+                body: JSON.stringify([{id:0, username, password, email, isAdmin: false}]),
                 });
                 if (!response.ok) {
                     throw new Error('Invalid registration data');
                 }
                 const data = await response.json();
-                LoginStore.getState().updateData(data)
-                console.log(data)
-            } catch (error) {
+                await LoginStore.getState().login(username, password)
+                } catch (error) {
                 console.error('Register failed:', error.message);
                 throw error;
             }
