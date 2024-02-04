@@ -16,7 +16,7 @@ const OfficeStore = create((set) => ({
           headers: {
             'Accept': '*/*',
             'Content-Type': 'application/json',  
-      }}),
+      }})},
   fetchOffice:
       async (officeId) => fetch(`${url}/offices/${officeId}`, {
         method: 'GET',
