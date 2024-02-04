@@ -8,8 +8,8 @@ export const useStore = create((set) => ({
     // office
     latitude: 52.2297,
     longitude: 21.0122,
-    availableFrom: "",
-    availableTo: "",
+    availableFrom: new Date(),
+    availableTo: new Date(),
     maxDistance: 1,
     name: "",
     minPrice: 0,
@@ -20,6 +20,8 @@ export const useStore = create((set) => ({
     minArea: 1,
     sort: "",
     sortOrder: "",
+
+    officeId: 1,
 
     // Setters
     setPageSize: (newValue) => set({ pageSize: newValue }),
@@ -39,4 +41,5 @@ export const useStore = create((set) => ({
     setSort: (newValue) => set({ sort: newValue }),
     setSortOrder: (newValue) => set({ sortOrder: newValue }),
     
+    setOfficeId: (newValue) => set({ officeId: newValue }),
 }));

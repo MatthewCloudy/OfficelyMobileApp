@@ -9,7 +9,7 @@ const windowHeight = Dimensions.get('window').height;
 
 
 
-const SearchPage = () => {
+export function SearchPage()  {
   const [address, setAddress] = useState('');
   const [numberOfPeople, setNumberOfPeople] = useState('');
   const [startDate, setStartDate] = useState(new Date(new Date().getTime() + (24 * 60 * 60 * 1000)));

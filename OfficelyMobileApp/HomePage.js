@@ -3,11 +3,14 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackg
 import { useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { useStore } from './store.js';
+import { useNavigation } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const image = require('./assets/officePicture.jpg');
 
 export function HomePage() {
 
+    const navigation = useNavigation();
     const {
         pageSize, setPageSize,
         pageNum, setPageNum,
@@ -28,13 +31,13 @@ export function HomePage() {
       } = useStore();
 
     const handleSignIn = () => {
-        // navigate do rejestracji
+        navigation.navigate('SignInPage');
     };
     const handleSignUp = () => {
-        // navigate do logowania
+        navigation.navigate('SignUpPage');
     };
     const handleSubmit = () => {
-        // get po wyniki i navigate do listy ofert
+        navigation.navigate('OfficeConfirmation');
     };
 
     const [selectedLocation, setSelectedLocation] = useState({

@@ -1,14 +1,44 @@
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
-import { useState } from 'react';
-
+import { useNavigation } from '@react-navigation/core';
+import { useStore } from './store.js';
 
 export function OfficeConfirmation() {
+    const navigation = useNavigation();
+    const [officeDetails, setOfficeDetails] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const { officeId } = useStore();
+    
+    
+    useEffect(() => {
+        const accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJpcCI6Ijg4LjE1Ni4xMzkuNTI6NDc1MDciLCJ1c2VyLWFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyMS4wLjAuMCBTYWZhcmkvNTM3LjM2Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3MDcwNjg2MTAsImV4cCI6MTcwNzE1NTAxMH0.DTDLcstV2GEBBFD5NtoSWX6Sq_zG7mWDGPqNXgVxkGI"; // Tutaj wprowadź swój token autoryzacyjny
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://officely.azurewebsites.net/offices/${officeId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${accessToken}`, // Dodaj token autoryzacji
+                    },
+                });
+                const data = await response.json();
 
-    const handlePayment = () => {
-        // navigate to payment
+                setOfficeDetails(data);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleConfirm = () => {
+        navigation.navigate('ParkingSpots');
     };
-
 
     return (
         <ScrollView style={styles.main}>
@@ -16,39 +46,37 @@ export function OfficeConfirmation() {
                 <View>
                     <Text style={styles.title}>Office - details</Text>
                 </View>
-                <View>
-                    <Text>Detail 1</Text>
-                    <Text>Detail 2</Text>
-                    <Text>Detail 3</Text>
-                </View>
+                {loading ? (
+                    <Text>Loading...</Text>
+                ) : error ? (
+                    <Text>Error fetching data</Text>
+                ) : (
+                    <View>
+                        <Text>{JSON.stringify(officeDetails)}</Text>
+                    </View>
+                )}
             </View>
-            
 
             <View>
                 <View>
                     <Text style={styles.title}>Payment method</Text>
                 </View>
                 <View style={styles.paymentBox}>
-                    <TouchableOpacity style={styles.button} onPress={handlePayment}>
-                        <Text style={styles.buttonText}>Method 1</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={handlePayment}>
-                        <Text style={styles.buttonText}>Method 2</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button} onPress={handlePayment}>
-                        <Text style={styles.buttonText}>Method 3</Text>
+                    <Text>Payment will be done at the first day of rent by cash to owner</Text>
+                </View>
+                <View style={styles.paymentBox}>
+                    <TouchableOpacity style={styles.button} onPress={handleConfirm}>
+                        <Text style={styles.buttonText}>Confirm rent</Text>
                     </TouchableOpacity>
                 </View>
             </View>
-            
         </ScrollView>
-        
     );
-  }
+}
 
 const styles = StyleSheet.create({
 main: {
-    backgroundColor: '#AED2FF',
+    backgroundColor: '#c5e2fa',
 },
 container: {
     flex: 1,
@@ -82,7 +110,7 @@ buttonContainer: {
     marginBottom: 20,
 },
 button: {
-    backgroundColor: '#494d52',
+    backgroundColor: '#272829',
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
