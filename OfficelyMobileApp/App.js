@@ -29,6 +29,7 @@ export default function App() {
   useEffect(() => {
     AsyncStorage.getItem('jwttoken').then((jwt) => {
       if (jwt) {
+        //console.log('jwt', jwt);
         AsyncStorage.getItem('user').then((userData) => {
           if (userData) {
             LoginStore.getState().updateData({user: JSON.parse(userData), jwttoken: jwt});
@@ -40,7 +41,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SignInPage">
+      <Stack.Navigator initialRouteName="SearchPage">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />

@@ -4,7 +4,7 @@ import StarRating from 'react-native-star-rating';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import OfficeStore from './API/OfficeStore';
 import LoginStore from './API/LoginStore';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,15 +19,13 @@ export function SearchPage()  {
 
   const [offices, setOffices] = useState(OfficeStore.getState().offices);
   useEffect(() => {
-    // Fetch offices, page 0, page size 10
-    if(LoginStore.getState().jwttoken)
-      OfficeStore.getState().fetchOffices(10, 0)
+    OfficeStore.getState().fetchOffices(10, 0)
       .then(response => response.json())
       .then(data => 
         {
+          console.log(data);
           OfficeStore.getState().setOffices(data);
           setOffices(data);
-          console.log(data);
         }
       )
       .catch(error => console.error('Error:', error));

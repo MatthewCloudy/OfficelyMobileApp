@@ -10,11 +10,21 @@ const LoginStore = create((set) =>
 	jwttoken: "",
     user: {},
     updateData:
-        (data) =>
+        async (data) =>
         {
             set({ jwttoken: data.jwttoken, user: data.user})
-            AsyncStorage.setItem('jwttoken', data.jwttoken);
-            AsyncStorage.setItem('user', JSON.stringify(data.user));
+            await AsyncStorage.removeItem('jwttoken')
+            .then(() => {
+                AsyncStorage.setItem('jwttoken', data.jwttoken)});
+            await AsyncStorage.removeItem('user')
+            .then(() => {
+                AsyncStorage.setItem('user', JSON.stringify(data.user))});
+
+            // console.log("jwttoken ", data.jwttoken)
+            // AsyncStorage.getItem('jwttoken').then((jwt) => {
+            //     if (jwt) {
+            //       console.log('jwt from memory', jwt);
+            //   }})
         },
     fetchUser:
         async () => fetch(`${url}/users/${LoginStore.getState().user.id}`, {

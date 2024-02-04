@@ -11,7 +11,6 @@ const OfficeStore = create((set) => ({
   fetchOffices: 
       (pageSize, pageNum) =>
       {
-        console.log('Authorization', `Bearer ${LoginStore.getState().jwttoken}`);
         return fetch(`${url}/offices?pageSize=${pageSize}&pageNum=${pageNum}`, {
           method: 'GET',
           headers: {
