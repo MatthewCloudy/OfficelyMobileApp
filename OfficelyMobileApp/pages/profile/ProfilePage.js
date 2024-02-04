@@ -46,6 +46,7 @@ export function ProfilePage({ navigation })
     };
 
     const deleteAccountHandler = () => {
+        // TODO: delete account
         LoginStore.getState().logout()
         .finally(() => navigation.navigate('Home'))
         .catch((error) => console.error('Error:', error));
