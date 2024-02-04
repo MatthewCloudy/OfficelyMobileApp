@@ -1,16 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import LoginStore from '../../API/LoginStore';
 
-const image = require('./assets/officePicture.jpg');
+const image = require('../../assets/officePicture.jpg');
 
-export function SignUpPage() {
+export function SignInPage() {
 
     const navigation = useNavigation();
     const handleSubmit = () => {
-        // POST dla utworzenia uzytkownika, GET po token, w przypadku istniejacego uzytkownika wyswietlic informacje pod danymi
-        navigation.navigate('Home');
+        LoginStore.getState().login(username, password)
+        .then(() => {
+            // TODO: navigate to home page
+            navigation.navigate('SearchPage');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });  
     };
 
     const [username, setUsername] = useState();
@@ -21,21 +27,24 @@ export function SignUpPage() {
             <ScrollView >
                 <View >
                     <View>
-                        <Text style={styles.title}>Sign Up</Text>
+                        <Text style={styles.title}>Sign In</Text>
                     </View>
                     
                     <View style={styles.container}>
-                        <TextInput style={styles.input} value={username} placeholder="Username" onChangeText={(e) => setUsername(e.target)}/>
-                        <TextInput
-                        style={styles.input} 
-                        value={password} 
+                        <TextInput style={styles.input} 
+                        value={username} 
+                        placeholder="Username" 
+                        onChangeText={text => setUsername(text)}/>
+                        <TextInput 
+                        style={styles.input}
+                        value={password}  
                         placeholder="Password" 
-                        onChangeText={(e) => setPassword(e.target)}
+                        onChangeText={text => setPassword(text)}
                         secureTextEntry={true}
                         />
 
                         <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                            <Text style={styles.buttonText}>Sign up</Text>
+                            <Text style={styles.buttonText}>Sign in</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

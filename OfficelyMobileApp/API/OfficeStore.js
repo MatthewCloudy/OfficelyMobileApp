@@ -9,13 +9,15 @@ const OfficeStore = create((set) => ({
 	setOffices: 
         (offices) => set({ offices }),
   fetchOffices: 
-      async (pageSize, pageNum) => fetch(`${url}/offices?pageSize=${pageSize}&pageNum=${pageNum}`, {
+      (pageSize, pageNum) =>
+      {
+        return fetch(`${url}/offices?pageSize=${pageSize}&pageNum=${pageNum}`, {
           method: 'GET',
           headers: {
             'Accept': '*/*',
             'Content-Type': 'application/json',  
             'Authorization': `Bearer ${LoginStore.getState().jwttoken}`
-      }}),
+      }})},
   fetchOffice:
       async (officeId) => fetch(`${url}/offices/${officeId}`, {
         method: 'GET',

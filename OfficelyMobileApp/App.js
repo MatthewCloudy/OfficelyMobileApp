@@ -13,18 +13,35 @@ import { OfficeConfirmation } from './OfficeConfirmation';
 import { ProfilePage } from './pages/profile/ProfilePage';
 import { ReservationsPage } from './pages/reservations/ReservationsPage';
 import { SavedOfficesPage } from './SavedOfficesPage';
-import { SignInPage } from './SignInPage';
-import { SignUpPage } from './SignUpPage';
+import { SignInPage } from './pages/login/SignInPage';
+import { SignUpPage } from './pages/login/SignUpPage.js';
 import { SearchPage } from './SearchPage.js';
 import { OfferDetailsPage } from './OfferDetailsPage.js'
+import LoginStore from './API/LoginStore.js';
+import { useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createStackNavigator();
 
 
 export default function App() {
+
+  useEffect(() => {
+    AsyncStorage.getItem('jwttoken').then((jwt) => {
+      if (jwt) {
+        //console.log('jwt', jwt);
+        AsyncStorage.getItem('user').then((userData) => {
+          if (userData) {
+            LoginStore.getState().updateData({user: JSON.parse(userData), jwttoken: jwt});
+          }
+        })
+      }
+    })
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="ReservationsPage">
+      <Stack.Navigator initialRouteName="SearchPage">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />
