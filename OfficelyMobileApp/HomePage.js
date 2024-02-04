@@ -74,9 +74,9 @@ export function HomePage() {
                 </TouchableOpacity>
             </View>
             <View style={styles.container}>
-                <TextInput style={styles.input} value={maxDistance} keyboardType="numeric" placeholder="Proximity [km]" onChangeText={(e) => setMaxDistance(e.target)}/>
-                <TextInput style={styles.input} value={minArea} keyboardType="numeric" placeholder="Area [m²]" onChangeText={(e) => setMinArea(e.target)}/>
-                <TextInput style={styles.input} value={maxPrice} keyboardType="numeric" placeholder="Max price [PLN]" onChangeText={(e) => setMaxPrice(e.target)}/>
+                <TextInput style={styles.input} value={maxDistance.toString()} keyboardType="numeric" placeholder="Proximity [km]" onChangeText={(e) => setMaxDistance(e.target)}/>
+                <TextInput style={styles.input} value={minArea.toString()} keyboardType="numeric" placeholder="Area [m²]" onChangeText={(e) => setMinArea(e.target)}/>
+                <TextInput style={styles.input} value={maxPrice.toString()} keyboardType="numeric" placeholder="Max price [PLN]" onChangeText={(e) => setMaxPrice(e.target)}/>
                 <View style={{ flex: 1,  height:300, width: 300}}>
                     <MapView
                         style={{ flex: 1}}

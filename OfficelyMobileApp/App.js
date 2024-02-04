@@ -10,8 +10,8 @@ import { HomePage } from './HomePage';
 import { ParkingSpots } from './ParkingSpots';
 import { ParkingConfirmation } from './ParkingConfirmation';
 import { OfficeConfirmation } from './OfficeConfirmation';
-import { ProfilePage } from './ProfilePage';
-import { ReservationsPage } from './ReservationsPage';
+import { ProfilePage } from './pages/profile/ProfilePage';
+import { ReservationsPage } from './pages/reservations/ReservationsPage';
 import { SavedOfficesPage } from './SavedOfficesPage';
 import { SignInPage } from './SignInPage';
 import { SignUpPage } from './SignUpPage';
@@ -22,18 +22,9 @@ const Stack = createStackNavigator();
 
 
 export default function App() {
-
-  let apiClient = new APIClient();
-  apiClient.login('admin', 'admin').then(() => {
-    console.log('Login successful');
-    apiClient.logout().then(() => {
-      console.log('Logout successful');
-    })
-  });
-
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="ReservationsPage">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />
