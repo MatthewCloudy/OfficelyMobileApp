@@ -14,7 +14,6 @@ const OfficeStore = create((set) => ({
           headers: {
             'Accept': '*/*',
             'Content-Type': 'application/json',  
-            'Authorization': `Bearer ${LoginStore.getState().jwttoken}`
       }}),
   fetchOffice:
       async (officeId) => fetch(`${url}/offices/${officeId}`, {
@@ -22,7 +21,6 @@ const OfficeStore = create((set) => ({
         headers: {
           'Accept': '*/*', 
           'Content-Type': 'application/json',  
-          'Authorization': `Bearer ${LoginStore.getState().jwttoken}`
       }}),
   saveOffice:
       async (officeId) => fetch(`${url}/offices/${officeId}/save`, {
