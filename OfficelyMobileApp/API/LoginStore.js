@@ -8,12 +8,23 @@ const LoginStore = create((set) =>
 {
     return {
 	jwttoken: "",
-    user: {id:0, username: "Marcin", email: "marcin@marcin.pl", isAdmin: false},
+    user: {},
     updateData:
-        (data) =>
+        async (data) =>
         {
             set({ jwttoken: data.jwttoken, user: data.user})
-            AsyncStorage.setItem('jwttoken', data.jwttoken);
+            await AsyncStorage.removeItem('jwttoken')
+            .then(() => {
+                AsyncStorage.setItem('jwttoken', data.jwttoken)});
+            await AsyncStorage.removeItem('user')
+            .then(() => {
+                AsyncStorage.setItem('user', JSON.stringify(data.user))});
+
+            // console.log("jwttoken ", data.jwttoken)
+            // AsyncStorage.getItem('jwttoken').then((jwt) => {
+            //     if (jwt) {
+            //       console.log('jwt from memory', jwt);
+            //   }})
         },
     fetchUser:
         async () => fetch(`${url}/users/${LoginStore.getState().user.id}`, {
@@ -46,24 +57,24 @@ const LoginStore = create((set) =>
             }
         },
     register:
-        async (username, emial, password) =>
+        async (username, email, password) =>
         {
             try {
+                console.log(JSON.stringify([{id:0, username, password, email, isAdmin: false}]))
                 const response = await fetch(`${url}/users`, {
                 method: 'POST',
                 headers: {
                     'Accept': '*/*',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({id:0, username, password, email, isAdmin: false}),
+                body: JSON.stringify([{id:0, username, password, email, isAdmin: false}]),
                 });
                 if (!response.ok) {
                     throw new Error('Invalid registration data');
                 }
                 const data = await response.json();
-                LoginStore.getState().updateData(data)
-                console.log(data)
-            } catch (error) {
+                await LoginStore.getState().login(username, password)
+                } catch (error) {
                 console.error('Register failed:', error.message);
                 throw error;
             }
