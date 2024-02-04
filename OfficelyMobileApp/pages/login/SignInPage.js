@@ -11,7 +11,8 @@ export function SignInPage() {
     const handleSubmit = () => {
         LoginStore.getState().login(username, password)
         .then(() => {
-            navigation.navigate('Home');
+            // TODO: navigate to home page
+            navigation.navigate('ProfilePage');
         })
         .catch((error) => {
             console.error('Error:', error);

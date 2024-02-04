@@ -40,7 +40,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="SignInPage">
         <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
         <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />

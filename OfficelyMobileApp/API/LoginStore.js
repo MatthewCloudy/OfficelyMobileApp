@@ -8,7 +8,7 @@ const LoginStore = create((set) =>
 {
     return {
 	jwttoken: "",
-    user: {id:0, username: "Marcin", email: "marcin@marcin.pl", isAdmin: false},
+    user: {},
     updateData:
         (data) =>
         {
