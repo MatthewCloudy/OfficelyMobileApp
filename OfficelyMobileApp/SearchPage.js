@@ -216,7 +216,6 @@ export function SearchPage()  {
 
   return (
     
-    
     <View style={{ flex: 1, padding: 0, marginTop: 25 }}>
       {/* Search Input Fields */}
 
@@ -224,9 +223,35 @@ export function SearchPage()  {
         <Text>Expand filters</Text>
       </TouchableOpacity>
 
-      <Collapsible collapsed={collapsed}>
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <Collapsible collapsed={collapsed} renderChildrenCollapsed={true}>
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        
+        <Text>Sort by:</Text>
+      <SelectList 
+        setSelected={(val) => setSort(val)} 
+        data={sortsList} 
+        save="value"
+        search={false} />
+        <View style={styles.row}>
+        <CheckBox disabled={false} value={sortOrder==null} onValueChange={(value) => setSortOrder(sortOrder==null? "DESC" : null)}/>
+        <Text>Sort in descending order</Text>
+        </View>
+        <Text>Office type:</Text>
+      <SelectList 
+        setSelected={(val) => setOfficeType(val)} 
+        data={officeTypeList} 
+        save="value"
+        defaultOption={{key:'4', value:"OFFICE"}}
+        search={false} 
+    />
+      <Text>Minimum rating:</Text>
+      <SelectList 
+        setSelected={(val) => setMinRating(val)} 
+        data={ratings} 
+        save="value"
+        defaultOption={{key:'1', value:"1"}}
+        search={false} 
+    />
       <TextInput
         placeholder="First day of reservation"
         value={'from ' + startDate.toDateString()}
@@ -269,7 +294,6 @@ export function SearchPage()  {
       )}
       <Text>Max distance (km):</Text>
       <TextInput
-        placeholder="Max distance (km)"
         value={maxDistance}
         onChangeText={setMaxDistance}
         keyboardType="numeric"
@@ -293,41 +317,18 @@ export function SearchPage()  {
         <Text>{item}</Text>
       </View>
       ))}
-      <Text>Office type:</Text>
-      <SelectList 
-        setSelected={(val) => setOfficeType(val)} 
-        data={officeTypeList} 
-        save="value"
-        defaultOption={{key:'4', value:"OFFICE"}}
-    />
-      <Text>Minimum rating:</Text>
-      <SelectList 
-        setSelected={(val) => setMinRating(val)} 
-        data={ratings} 
-        save="value"
-        defaultOption={{key:'1', value:"1"}}
-    />
+      
     <Text>Minimum area:</Text>
     <TextInput
-        placeholder="Minimum area (m^2)"
         value={minArea}
         onChangeText={setMinArea}
         keyboardType="numeric"
       />
-      <Text>Sort by:</Text>
-      <SelectList 
-        setSelected={(val) => setSort(val)} 
-        data={sortsList} 
-        save="value"/>
-        <View style={styles.row}>
-        <CheckBox disabled={false} value={sortOrder==null} onValueChange={(value) => setSortOrder(sortOrder==null? "DESC" : null)}/>
-        <Text>Sort in descending order</Text>
-        </View>
+      
       <Button title='Filter search'/>
         </ScrollView>
-      
       </Collapsible>
-
+      </ScrollView>
       
       
 
