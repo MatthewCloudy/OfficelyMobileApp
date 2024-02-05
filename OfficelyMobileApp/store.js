@@ -2,22 +2,22 @@ import { create } from 'zustand';
 
 export const useStore = create((set) => ({
     // pages
-    pageSize: 50,
-    pageNum: 50,
+    pageSize: 10,
+    pageNum: 0,
 
     // office
     latitude: 52.2297,
     longitude: 21.0122,
     availableFrom: new Date(),
     availableTo: new Date(),
-    maxDistance: 1,
+    maxDistance: "",
     name: "",
-    minPrice: 0,
-    maxPrice: 1000,
+    minPrice: "",
+    maxPrice: "",
     amenities: [],
     officeType: "",
     minRating: 0,
-    minArea: 1,
+    minArea: "",
     sort: "",
     sortOrder: "",
 

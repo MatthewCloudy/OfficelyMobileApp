@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import {ScrollView, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import LoginStore from '../../API/LoginStore';
+//import { ScrollView } from 'react-native-web';
 
 export function ProfilePage({ navigation })
 {
@@ -83,6 +84,9 @@ export function ProfilePage({ navigation })
     };
 
     return (
+        <ScrollView>
+
+
         <View style={styles.container}>
             <View style={styles.flex}>
                 <TouchableOpacity style={styles.button}>
@@ -164,6 +168,7 @@ export function ProfilePage({ navigation })
                 </View>
             }
         </View>
+        </ScrollView>
     );
 
 };

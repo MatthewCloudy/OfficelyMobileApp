@@ -13,7 +13,7 @@ export function SignUpPage() {
         console.log(username, email, password);
         LoginStore.getState().register(username, email, password)
         .then(() => {
-        navigation.navigate('Home');
+        navigation.navigate('HomePage');
         })
         .catch((error) => { console.error('Error:', error); });
     };
