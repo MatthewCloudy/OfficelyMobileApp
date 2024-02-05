@@ -10,6 +10,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import OfficeStore from './API/OfficeStore';
 import LoginStore from './API/LoginStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { querryOffices } from './API/OfficeStore';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -122,51 +123,37 @@ export function SearchPage()  {
 
   useEffect(() => {
     // Pobieranie ofert z API - przykład użycia fetch()
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://officely.azurewebsites.net/offices', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer `,
-          },
-          body: JSON.stringify({
-            pageSize: pageSize,
-            pageNum: pageNum,
-            location: latitude,
-            availableFrom: availableFrom,
-            availableTo: availableTo,
-            maxDistance: maxDistance,
-            name: name,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
-            amenities: amenities,
-            officeType: officeType,
-            minRating: minRating,
-            minArea: minArea,
-            sort: sort,
-            sortOrder: sortOrder,
-
-          }),
-        });
-        const data = await response.json();
-
-        if(response.status === 401)
-        {
-          console.log("401");
-        }
-
-        setOffers(data);
-
-
-
-      } catch (error) {
-        console.error('Error fetching offers:', error);
-      }
-    };
-
-    //fetchData();
-  }, []); // [] oznacza, że useEffect zostanie uruchomiony tylko raz po pierwszym renderowaniu komponentu
+        querryOffices(pageSize, pageNum, 
+          {
+          availableFrom: availableFrom.toISOString(),
+          availableTo: availableFrom.toISOString(),
+          maxDistance: maxDistance,
+          name: name,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          amenities: amenities,
+          //officeType: officeType,
+          minRating: minRating,
+          minArea: minArea,
+          sort: sort,
+          sortOrder: sortOrder,
+          lat: latitude,
+          lng: longitude
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('No office fetched');
+            }
+            return response.json();
+        })
+        .then(data => 
+          {
+            setOffers(data)
+            console.log(data)
+          })
+        .catch((error) => console.error('Error:', error));
+    
+  }, [])
   
 
 
@@ -180,10 +167,36 @@ export function SearchPage()  {
     setEndDate(selectedDate || endDate);
   };
 
-  const handleFilterClick = (event, selectedDate) => {
-    // fetch po zaktualizowane dane
-    // setOffers() ustawiamy na to co przyszlo
+  const handleFilterClick = (event) => {
+      querryOffices(pageSize, pageNum, 
+        {
+        location: latitude,
+        availableFrom: availableFrom.toISOString(),
+        availableTo: availableTo.toISOString(),
+        maxDistance: maxDistance,
+        name: name,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        amenities: amenities,
+        //officeType: officeType,
+        minRating: minRating,
+        minArea: minArea,
+        sort: sort,
+        sortOrder: sortOrder})
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('No office fetched');
+          }
+          return response.json();
+      })
+      .then(data => 
+        {
+          setOffers(data)
+          console.log(data)
+        })
+      .catch((error) => console.error('Error:', error));
   };
+
 
   const toggleExpand = () => {
     setCollapsed(!collapsed);
@@ -325,7 +338,7 @@ export function SearchPage()  {
         keyboardType="numeric"
       />
       
-      <Button title='Filter search'/>
+      <Button title='Filter search' onPress={handleFilterClick}/>
         </ScrollView>
       </Collapsible>
       </ScrollView>
@@ -337,7 +350,7 @@ export function SearchPage()  {
         {offers.map((offer) => (
           <View key={offer.id} style={styles.container}>
             <TouchableOpacity onPress={() => console.log('office pressed')}>
-              <Image source={{ uri: offer.image }} style={styles.image} />
+              <Image source={{ uri: offer.mainPhoto }} style={styles.image} />
               <StarRating
                   disabled={true}
                   maxStars={5}
