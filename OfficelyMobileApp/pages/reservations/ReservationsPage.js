@@ -10,6 +10,10 @@ export function ReservationsPage({navigation})
     const [itemsData, setData] = React.useState([]);
 
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', fetchReservs);
+
+        const fetchReservs = () =>
+        {
         ReservationStore.getState().fetchReservations(10, 0)
         .then((response) => response.json())
         .then((data) => {
@@ -37,9 +41,12 @@ export function ReservationsPage({navigation})
                 })
                 .catch((error) => console.error('Error:', error));
             }
-        })
-        .catch((error) => console.error('Error:', error));
-    }, []);
+        }).catch((error) => console.error('Error:', error));
+        
+        }
+        return unsubscribe;
+    
+    }, [navigation]);
 
     return (
         <View>
