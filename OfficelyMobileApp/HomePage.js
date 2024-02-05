@@ -10,6 +10,7 @@ const image = require('./assets/officePicture.jpg');
 
 export function HomePage() {
   const navigation = useNavigation();
+  const [loggedIn, setLoggedIn] = useState(false);
   const {
     latitude,
     setLatitude,
@@ -125,6 +126,9 @@ export function HomePage() {
 
   useEffect(() => {
     fetchSuggestions();
+    LoginStore.subscribe(() => {
+      setLoggedIn(LoginStore.getState().jwttoken !== null);
+    });
   }, [searchText]);
 
   return (
@@ -134,7 +138,7 @@ export function HomePage() {
           <View>
             <Text style={styles.title}>Officely</Text>
           </View>
-          {LoginStore.getState().jwttoken == "" && 
+          {!loggedIn && 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleSignUp}>
               <Text style={styles.buttonText}>Sign up</Text>

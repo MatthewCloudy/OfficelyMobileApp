@@ -15,10 +15,18 @@ export function ReservationsPage({navigation})
         .then((data) => {
             ReservationStore.getState().setReservations(data);
             setReservations(data);
+
+            setData([]);
             for (let i = 0; i < reservations.length; i++) {
                 OfficeStore.getState().fetchOffice(reservations[i].officeId)
-                .then((response) => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('No office fetched');
+                    }
+                    return response.json();
+                  })
                 .then((data) => {
+                    console.log(data);
                     const newItem = {
                         office: data,
                         reservation: reservations[i]

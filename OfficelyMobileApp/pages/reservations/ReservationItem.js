@@ -22,7 +22,7 @@ const ReservationItem = ({ item }) =>
 
     const deleteHandler = () =>
     {
-        // TODO: delete reservation
+        ReservationStore.getState().deleteReservation(item.reservation.id)
     };
 
     const formatDate = (date) =>
