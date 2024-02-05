@@ -20,6 +20,8 @@ export const useStore = create((set) => ({
     minArea: 1,
     sort: "",
     sortOrder: "",
+    startDate: new Date(new Date().getTime() + (24 * 60 * 60 * 1000)),
+    endDate: new Date(new Date().getTime() + (7 * 24 * 60 * 60 * 1000)),
 
 
 
@@ -41,5 +43,7 @@ export const useStore = create((set) => ({
     setMinArea: (newValue) => set({ minArea: newValue }),
     setSort: (newValue) => set({ sort: newValue }),
     setSortOrder: (newValue) => set({ sortOrder: newValue }),
+    setStartDate: (newValue) => set({ startDate: newValue }),
+    setEndDate: (newValue) => set({ endDate: newValue }),
     
 }));
