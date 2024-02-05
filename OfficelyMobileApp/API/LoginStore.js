@@ -102,11 +102,10 @@ const LoginStore = create((set) =>
                     'Authorizatiox': `Bearer ${LoginStore.getState().jwttoken}`,
                   }
                 });
-        
+                set({ jwttoken: "", user: {}})
                 if (!response.ok) {
                   throw new Error(`Request failed: ${response.statusText}`);
                 }
-                set({ jwttoken: "", user: {}})
                 return response;
             } catch (error) {
                 console.error('Authenticated request failed:', error.message);

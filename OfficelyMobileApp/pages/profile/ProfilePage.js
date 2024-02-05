@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {ScrollView, View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput } from 'react-native';
 import LoginStore from '../../API/LoginStore';
-//import { ScrollView } from 'react-native-web';
+import { ImageBackground } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export function ProfilePage({ navigation })
 {
@@ -15,13 +16,6 @@ export function ProfilePage({ navigation })
     const [match, setMatch] = useState(true);
 
     useEffect(() => {
-        // LoginStore.getState().fetchUser()
-        // .then((response) => response.json())
-        // .then((data) => {
-        //     setUser(data.user);
-        //     LoginStore.getState().updateData(old => ({...old, user: data.user}));
-        // })
-        // .catch((error) => console.error('Error:', error));
     }, []);
 
     useEffect(() => {
@@ -47,7 +41,6 @@ export function ProfilePage({ navigation })
     };
 
     const deleteAccountHandler = () => {
-        // TODO: delete account
         LoginStore.getState().logout()
         .finally(() => navigation.navigate('Home'))
         .catch((error) => console.error('Error:', error));
@@ -84,21 +77,12 @@ export function ProfilePage({ navigation })
     };
 
     return (
-        <ScrollView>
-
-
+        <KeyboardAwareScrollView 
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        >
+        <ImageBackground source={require('../../assets/officePicture.jpg')} resizeMode="cover" style={styles.image}>
         <View style={styles.container}>
-            <View style={styles.flex}>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>My Reservations</Text>
-                </TouchableOpacity>
-                <View style={{width: 20}}/>
-                <TouchableOpacity style={styles.button}>
-                    <Text style={styles.buttonText}>Saved offers</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style = {{height: 60}}/>
+            <View style = {{height: 200}}/>
             
             <Image source={require(`../../assets/profilePhoto.jpg`)} style={styles.photo} />
             <Text style={styles.username}>{user.username}</Text>
@@ -168,7 +152,8 @@ export function ProfilePage({ navigation })
                 </View>
             }
         </View>
-        </ScrollView>
+        </ImageBackground>
+        </KeyboardAwareScrollView>
     );
 
 };

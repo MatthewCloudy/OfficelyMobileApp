@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -17,6 +17,7 @@ import { SearchPage } from './SearchPage.js';
 import { OfferDetailsPage } from './OfferDetailsPage.js';
 
 import { Ionicons } from '@expo/vector-icons';
+import LoginStore from './API/LoginStore.js';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -54,6 +55,12 @@ const ReservationStack = () => (
 );
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    LoginStore.subscribe(() => {
+      setLoggedIn(LoginStore.getState().jwttoken !== "");
+    })
+  },[])
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -62,11 +69,11 @@ export default function App() {
             let iconName;
 
             if (route.name === 'Home') {
-              iconName = focused ? 'home' : 'home-outline';
+              iconName = focused || !loggedIn ? 'home' : 'home-outline';
             } else if (route.name === 'My reservations') {
-              iconName = focused ? 'calendar' : 'calendar-outline';
+              iconName = focused && loggedIn ? 'calendar' : 'calendar-outline';
             } else if (route.name === 'Profile') {
-              iconName = focused ? 'person' : 'person-outline';
+              iconName = focused && loggedIn ? 'person' : 'person-outline';
             }
 
             return <Ionicons name={iconName} size={size} color={color} />;
@@ -84,8 +91,8 @@ export default function App() {
 
       >
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="My reservations" component={ReservationStack} />
-        <Tab.Screen name="Profile" component={ProfileStack} />
+        <Tab.Screen name="My reservations" component={loggedIn ? ReservationStack : HomeStack}/>
+        <Tab.Screen name="Profile" component={loggedIn ? ProfileStack : HomeStack} />
       </Tab.Navigator>
       <StatusBar style="auto" />
     </NavigationContainer>

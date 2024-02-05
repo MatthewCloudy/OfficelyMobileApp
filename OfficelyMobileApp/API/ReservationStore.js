@@ -11,7 +11,6 @@ const ReservationStore = create((set) => ({
         (pageSize, pageNum) => 
         {
             let fetchUrl = `${url}/reservations?pageSize=${pageSize}&pageNum=${pageNum}&userId=${LoginStore.getState().user.id}`;
-            console.log(fetchUrl);
             return fetch(fetchUrl, {
             method: 'GET',
             headers: {
