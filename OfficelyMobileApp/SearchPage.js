@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Button, Keyboard} from 'react-native';
+import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Button, Keyboard, FlatList} from 'react-native';
 import StarRating from 'react-native-star-rating';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from 'expo-checkbox';
@@ -21,43 +21,43 @@ export function SearchPage()  {
   const [offers, setOffers] = useState([
     {
       id: 1,
-      image: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
-      title: 'First Sample Office',
+      mainPhoto: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
+      name: 'First Sample Office',
       address: 'Koszykowa 1, Warsaw',
       rating: 5,
-      price: '$19.99',
+      pricePerDay: '$19.99',
     },
     {
       id: 2,
-      image: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg',
-      title: 'Second Sample Office',
+      mainPhoto: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg',
+      name: 'Second Sample Office',
       address: 'Koszykowa 2, Warsaw',
       rating: 3,
-      price: '$17.00',
+      pricePerDay: '$17.00',
     },
     {
       id: 3,
-      image: 'https://st3.depositphotos.com/12071432/18440/i/450/depositphotos_184405718-stock-photo-working-tables-computers-laptops-business.jpg',
-      title: 'Third Sample Office',
+      mainPhoto: 'https://st3.depositphotos.com/12071432/18440/i/450/depositphotos_184405718-stock-photo-working-tables-computers-laptops-business.jpg',
+      name: 'Third Sample Office',
       address: 'Koszykowa 3, Warsaw',
       rating: 3,
-      price: '$13.50',
+      pricePerDay: '$13.50',
     },
     {
       id: 4,
-      image: 'https://img.freepik.com/premium-photo/interior-empty-office-with-glass-partitions-loft-style-view-city-park_124507-32995.jpg',
-      title: 'Fourth Sample Office',
+      mainPhoto: 'https://img.freepik.com/premium-photo/interior-empty-office-with-glass-partitions-loft-style-view-city-park_124507-32995.jpg',
+      name: 'Fourth Sample Office',
       address: 'Koszykowa 4, Warsaw',
       rating: 4,
-      price: '$34.00',
+      pricePerDay: '$34.00',
     },
     {
       id: 5,
-      image: 'https://assets-global.website-files.com/5e72120a6f610062d1dae3b5/63b65f840f5cd6eef15b8aad_3A5A9831-min.jpg',
-      title: 'Fifth Sample Office',
+      mainPhoto: 'https://assets-global.website-files.com/5e72120a6f610062d1dae3b5/63b65f840f5cd6eef15b8aad_3A5A9831-min.jpg',
+      name: 'Fifth Sample Office',
       address: 'Koszykowa 5, Warsaw',
       rating: 3,
-      price: '$27.00',
+      pricePerDay: '$27.00',
     },
   ]);
   const [collapsed, setCollapsed] = useState(true);
@@ -324,6 +324,12 @@ export function SearchPage()  {
         onChangeText={setMaxPrice}
         keyboardType="numeric"
       />
+      <Text>Minimum area:</Text>
+    <TextInput
+        value={minArea}
+        onChangeText={setMinArea}
+        keyboardType="numeric"
+      />
       <Text>Amenities required:</Text>
       {amenitiesList.map((item) => (
         <View style={styles.row}>
@@ -332,46 +338,38 @@ export function SearchPage()  {
       </View>
       ))}
       
-    <Text>Minimum area:</Text>
-    <TextInput
-        value={minArea}
-        onChangeText={setMinArea}
-        keyboardType="numeric"
-      />
+    
       
       <Button title='Filter search' onPress={handleFilterClick}/>
         </ScrollView>
       </Collapsible>
       </ScrollView>
       
-      
-
-      {/* ScrollView for listing offers */}
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {offers.map((offer) => (
-          <View key={offer.id} style={styles.container}>
-            <TouchableOpacity onPress={() => console.log('office pressed')}>
-              <Image source={{ uri: offer.mainPhoto }} style={styles.image} />
-              <StarRating
-                  disabled={true}
-                  maxStars={5}
-                  rating={offer.rating}
-                  fullStarColor={'#FFD700'}
-                  starSize={20}
-              />
-              <Text style={styles.name}>{offer.title}</Text>
-              <Text>{offer.address}</Text>
-              <Text>{`Price: ${offer.price} / day`}</Text>
-              <TouchableOpacity onPress={() => console.log('Add to favorites pressed')}>
-                <Text>Add to Favorites</Text>
-              </TouchableOpacity>
-            </TouchableOpacity>
-            
-          </View>
-        ))}
-      </ScrollView>
-      
-      
+      <FlatList
+  data={offers}
+  keyExtractor={(item) => item.id}
+  contentContainerStyle={styles.scrollContainer}
+  renderItem={({ item }) => (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => console.log('office pressed')}>
+        <Image source={{ uri: item.mainPhoto }} style={styles.image} />
+        <StarRating
+          disabled={true}
+          maxStars={5}
+          rating={item.rating}
+          fullStarColor={'#FFD700'}
+          starSize={20}
+        />
+        <Text style={styles.name}>{item.name}</Text>
+        <Text>{item.address}</Text>
+        <Text>{`Price: ${item.pricePerDay} / day`}</Text>
+        <TouchableOpacity onPress={() => console.log('Add to favorites pressed')}>
+          <Text>Add to Favorites / Remove from Favorites</Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
+  )}
+/>
         
     </View>
     
