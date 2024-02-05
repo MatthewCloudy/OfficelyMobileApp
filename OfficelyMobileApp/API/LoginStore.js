@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const url = 'https://officely.azurewebsites.net';
 //const url = 'http://localhost:8080';
@@ -13,18 +12,6 @@ const LoginStore = create((set) =>
         async (data) =>
         {
             set({ jwttoken: data.jwttoken, user: data.user})
-            await AsyncStorage.removeItem('jwttoken')
-            .then(() => {
-                AsyncStorage.setItem('jwttoken', data.jwttoken)});
-            await AsyncStorage.removeItem('user')
-            .then(() => {
-                AsyncStorage.setItem('user', JSON.stringify(data.user))});
-
-            // console.log("jwttoken ", data.jwttoken)
-            // AsyncStorage.getItem('jwttoken').then((jwt) => {
-            //     if (jwt) {
-            //       console.log('jwt from memory', jwt);
-            //   }})
         },
     fetchUser:
         async () => fetch(`${url}/users/${LoginStore.getState().user.id}`, {
@@ -120,7 +107,6 @@ const LoginStore = create((set) =>
                   throw new Error(`Request failed: ${response.statusText}`);
                 }
                 set({ jwttoken: "", user: {}})
-                AsyncStorage.removeItem('cookieName');
                 return response;
             } catch (error) {
                 console.error('Authenticated request failed:', error.message);

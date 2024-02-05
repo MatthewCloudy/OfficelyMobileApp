@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StatusBar } from 'expo-status-bar';
 
 import { HomePage } from './HomePage';
@@ -16,15 +15,15 @@ import { SignInPage } from './pages/login/SignInPage';
 import { SignUpPage } from './pages/login/SignUpPage.js';
 import { SearchPage } from './SearchPage.js';
 import { OfferDetailsPage } from './OfferDetailsPage.js';
-import LoginStore from './API/LoginStore.js';
 
-import { Ionicons } from '@expo/vector-icons'; // Importuj ikony z Expo
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const HomeStack = () => (
-  <Stack.Navigator initialRouteName="Home">
+  <Stack.Navigator initialRouteName="Home"
+    screenOptions={{ headerShown: false }}>
     <Stack.Screen name="HomePage" component={HomePage} />
     <Stack.Screen name="ParkingSpots" component={ParkingSpots} />
     <Stack.Screen name="ParkingConfirmation" component={ParkingConfirmation} />
@@ -40,31 +39,21 @@ const HomeStack = () => (
 );
 
 const ProfileStack = () => (
-  <Stack.Navigator initialRouteName="Home">
+  <Stack.Navigator initialRouteName="Home"
+    screenOptions={{ headerShown: false }}>
     <Stack.Screen name="ProfilePage" component={ProfilePage} />
     <Stack.Screen name="SavedOfficesPage" component={SavedOfficesPage} />
   </Stack.Navigator>
 );
 
 const ReservationStack = () => (
-  <Stack.Navigator initialRouteName="SignInPage">
+  <Stack.Navigator initialRouteName="SignInPage"
+    screenOptions={{ headerShown: false }}>
     <Stack.Screen name="ReservationsPage" component={ReservationsPage} />
   </Stack.Navigator>
 );
 
 export default function App() {
-  useEffect(() => {
-    AsyncStorage.getItem('jwttoken').then((jwt) => {
-      if (jwt) {
-        AsyncStorage.getItem('user').then((userData) => {
-          if (userData) {
-            LoginStore.getState().updateData({ user: JSON.parse(userData), jwttoken: jwt });
-          }
-        });
-      }
-    });
-  }, []);
-
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -90,6 +79,7 @@ export default function App() {
             },
             null,
           ],
+          headerShown: false
         })}
 
       >

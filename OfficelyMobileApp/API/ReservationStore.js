@@ -10,11 +10,13 @@ const ReservationStore = create((set) => ({
     fetchReservations:
         (pageSize, pageNum) => 
         {
-            let fetchUrl = `${url}/reservations?pageSize=${pageSize}&pageNum=${pageNum}?userId=${LoginStore.getState().user.id}`;
+            let fetchUrl = `${url}/reservations?pageSize=${pageSize}&pageNum=${pageNum}&userId=${LoginStore.getState().user.id}`;
+            console.log(fetchUrl);
             return fetch(fetchUrl, {
             method: 'GET',
             headers: {
                 'Accept': '*/*', 
+                'accept': 'application/json',
                 'Authorization': `Bearer ${LoginStore.getState().jwttoken}`}})   
         },
     fetchReservation:

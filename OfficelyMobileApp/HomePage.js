@@ -4,6 +4,7 @@ import { useStore } from './store';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MapView, { Marker } from 'react-native-maps';
+import LoginStore from './API/LoginStore';
 
 const image = require('./assets/officePicture.jpg');
 
@@ -133,6 +134,7 @@ export function HomePage() {
           <View>
             <Text style={styles.title}>Officely</Text>
           </View>
+          {LoginStore.getState().jwttoken == "" && 
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={handleSignUp}>
               <Text style={styles.buttonText}>Sign up</Text>
@@ -141,7 +143,7 @@ export function HomePage() {
             <TouchableOpacity style={styles.button} onPress={handleSignIn}>
               <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
-          </View>
+          </View>}
           <View style={styles.container}>
             <TextInput
               style={styles.input}
