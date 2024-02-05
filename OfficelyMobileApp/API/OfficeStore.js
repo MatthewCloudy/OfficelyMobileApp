@@ -42,4 +42,44 @@ const OfficeStore = create((set) => ({
       }})
 }))
 
+function objectToQueryString(obj) {
+  return Object.keys(obj)
+    .filter(key => obj[key] !== null && obj[key] !== "" && (key!='amenities' || obj[key].length > 0))
+    .map(key => 
+      {
+        if(key === 'amenities')
+          return `amenities=${obj[key].join(', ')}`
+        return `${key}=${obj[key]}`
+      })
+    .join('&');
+}
+
+function formatDateTime(dateTime)
+{
+    return dateTime.substring(0,19);
+}
+
+function querryOffices(pageSize, pageNum, parameters) {
+
+  
+  if(parameters.availableFrom)
+    parameters = {...parameters, 
+      availableFrom : formatDateTime(parameters.availableFrom)}
+  if(parameters.availableTo)
+    parameters = {...parameters, 
+      availableTo : formatDateTime(parameters.availableTo)}
+
+  let querryUrl = `${url}/offices?pageSize=${pageSize}&pageNum=${pageNum}`;
+  let querry = objectToQueryString(parameters);
+  console.log(parameters.officeType);
+  console.log(querry);
+  querryUrl = querryUrl + '&' + querry;
+  return fetch(`${querryUrl}`, {
+    method: 'GET',
+    headers: {
+      'Accept': '*/*',
+      'Content-Type': 'application/json',  
+}})}
+
+export { querryOffices };
 export default OfficeStore;
