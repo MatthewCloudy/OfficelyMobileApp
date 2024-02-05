@@ -91,7 +91,7 @@ export function ProfilePage({ navigation })
             { !editingEmail && !editingPassword &&
              <View style = {styles.lowerContainer}>
                 <TouchableOpacity style={styles.button} onPress={() => setEE(true)}>
-                    <Text style={styles.buttonText}>Update profile</Text>
+                    <Text style={styles.buttonText}>Update e-mail</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={() => setEP(true)}>
                     <Text style={styles.buttonText}>Change Password</Text>
