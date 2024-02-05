@@ -10,7 +10,7 @@ const ReservationStore = create((set) => ({
     fetchReservations:
         (pageSize, pageNum) => 
         {
-            let fetchUrl = `${url}/reservations?pageSize=${pageSize}&pageNum=${pageNum}?userId=${LoginStore.getState().user.id}`;
+            let fetchUrl = `${url}/reservations?pageSize=${pageSize}&pageNum=${pageNum}&userId=${LoginStore.getState().user.id}`;
             return fetch(fetchUrl, {
             method: 'GET',
             headers: {
@@ -45,14 +45,14 @@ const ReservationStore = create((set) => ({
             headers: {
                 'Accept': '*/*', 
                 'Authorization': `Bearer ${LoginStore.getState().jwttoken}`},
-            body: JSON.stringify(id=0, userId = LoginStore.getState().user.id, 
-                    officeId, startDateTime = formatDateTime(startDate), endDateTime = formatDateTime(endDate))
+            body: JSON.stringify([{id:0, userId : LoginStore.getState().user.id, 
+                    officeId, startDateTime : formatDateTime(startDate), endDateTime : formatDateTime(endDate)}])
         })
 }))
 
 const formatDateTime = (dateTime) =>
 {
-  return dateTime.substring(0, dateTime.length - 6);
+  return dateTime.substring(0, 19);
 }
 
 export default ReservationStore ;
