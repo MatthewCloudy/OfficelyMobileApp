@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ActivityIndicator, SafeAreaView, FlatList } from 'react-native';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/core';
 
 const DATA = [
     {
@@ -34,11 +35,14 @@ export function ParkingSpots() {
 
     const [spots, setSpots] = useState();
     const [isLoading, setIsLoading] = useState(false);
-
+    const navigation = useNavigation();
     const handleRent = () => {
         // navigate to summary of renting parking spots
     };
 
+    const handleAbort = () => {
+      navigation.navigate('ProfilePage');
+  };
     const Item = ({title}) => (
         <View style={styles.itemContainer}>
           <Text style={styles.itemTitle}>{title}</Text>
@@ -59,6 +63,9 @@ export function ParkingSpots() {
       return(
         <SafeAreaView style={styles.container}>
         <Text style={styles.title}>Available parking spots nearby your office</Text>  
+          <TouchableOpacity style={styles.button} onPress={handleAbort}>
+              <Text style={styles.buttonText}>No thanks, I'm done</Text>
+          </TouchableOpacity>
             <FlatList
                 data={DATA}
                 renderItem={({item}) => <Item title={item.title} />}
@@ -104,10 +111,16 @@ title: {
     marginBottom: 20,
   },
 button: {
-    backgroundColor: '#c72b62',
+  
+    backgroundColor: '#272829',
     borderRadius: 30,
     paddingVertical: 10,
     paddingHorizontal: 20,
     margin: 20,
+},
+buttonText: {
+  color: '#fff',
+  fontSize: 15,
+  textAlign: 'center',
 },
 });

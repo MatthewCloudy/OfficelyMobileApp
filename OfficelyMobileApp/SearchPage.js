@@ -7,12 +7,14 @@ import { useStore } from './store.js';
 import Collapsible from 'react-native-collapsible';
 import MapView, { Marker } from 'react-native-maps';
 import { SelectList } from 'react-native-dropdown-select-list'
-
+import OfficeStore from './API/OfficeStore';
+import LoginStore from './API/LoginStore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
-export const SearchPage = () => {
+export function SearchPage()  {
   const [address, setAddress] = useState('');
   const [numberOfPeople, setNumberOfPeople] = useState('');
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
