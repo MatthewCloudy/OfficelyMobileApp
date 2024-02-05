@@ -43,3 +43,23 @@ export const useStore = create((set) => ({
     
     setOfficeId: (newValue) => set({ officeId: newValue }),
 }));
+
+
+// const {
+//     pageSize, setPageSize,
+//     pageNum, setPageNum,
+//     latitude, setLatitude,
+//     longitude, setLongitude,
+//     availableFrom, setAvailableFrom,
+//     availableTo, setAvailableTo,
+//     maxDistance, setMaxDistance,
+//     name, setName,
+//     minPrice, setMinPrice,
+//     maxPrice, setMaxPrice,
+//     amenities, setAmenities,
+//     officeType, setOfficeType,
+//     minRating, setMinRating,
+//     minArea, setMinArea,
+//     sort, setSort,
+//     sortOrder, setSortOrder,
+//   } = useStore();

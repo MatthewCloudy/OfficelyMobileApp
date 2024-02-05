@@ -4,7 +4,7 @@ import { useState } from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { useStore } from './store.js';
 import { useNavigation } from '@react-navigation/native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const image = require('./assets/officePicture.jpg');
 
@@ -12,22 +12,11 @@ export function HomePage() {
 
     const navigation = useNavigation();
     const {
-        pageSize, setPageSize,
-        pageNum, setPageNum,
         latitude, setLatitude,
         longitude, setLongitude,
-        availableFrom, setAvailableFrom,
-        availableTo, setAvailableTo,
         maxDistance, setMaxDistance,
-        name, setName,
-        minPrice, setMinPrice,
         maxPrice, setMaxPrice,
-        amenities, setAmenities,
-        officeType, setOfficeType,
-        minRating, setMinRating,
         minArea, setMinArea,
-        sort, setSort,
-        sortOrder, setSortOrder,
       } = useStore();
 
     const handleSignIn = () => {
@@ -58,54 +47,55 @@ export function HomePage() {
 
 
     return (
-        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-            <ScrollView >
+        <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
+            <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <View >
-            <View>
-                <Text style={styles.title}>Officely</Text>
-            </View>
-            <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-                    <Text style={styles.buttonText}>Sign up</Text>
-                </TouchableOpacity>
-                <View style={{ marginRight: 30 }} />
-                <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-                    <Text style={styles.buttonText}>Sign in</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.container}>
-                <TextInput style={styles.input} value={maxDistance.toString()} keyboardType="numeric" placeholder="Proximity [km]" onChangeText={(e) => setMaxDistance(e.target)}/>
-                <TextInput style={styles.input} value={minArea.toString()} keyboardType="numeric" placeholder="Area [m²]" onChangeText={(e) => setMinArea(e.target)}/>
-                <TextInput style={styles.input} value={maxPrice.toString()} keyboardType="numeric" placeholder="Max price [PLN]" onChangeText={(e) => setMaxPrice(e.target)}/>
-                <View style={{ flex: 1,  height:300, width: 300}}>
-                    <MapView
-                        style={{ flex: 1}}
-                        initialRegion={{
-                        latitude: 52.2297, // Warszawa, szerokość geograficzna
-                        longitude: 21.0122, // Warszawa, długość geograficzna
-                        latitudeDelta: 0.0922,
-                        longitudeDelta: 0.0421,
-                        }}
-                        onPress={handleMapPress}
-                    >
-                        <Marker
-                        coordinate={{
-                            latitude: selectedLocation.latitude,
-                            longitude: selectedLocation.longitude,
-                        }}
-                        />
-                    </MapView>
+                <View>
+                    <Text style={styles.title}>Officely</Text>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                    <Text style={styles.buttonText}>Submit</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
-            </ScrollView>
-
-
-        </ImageBackground>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+                        <Text style={styles.buttonText}>Sign up</Text>
+                    </TouchableOpacity>
+                    <View style={{ marginRight: 30 }} />
+                    <TouchableOpacity style={styles.button} onPress={handleSignIn}>
+                        <Text style={styles.buttonText}>Sign in</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.container}>
+                    <TextInput style={styles.input} value={maxDistance.toString()} keyboardType="numeric" placeholder="Proximity [km]" onChangeText={(e) => setMaxDistance(e.target)}/>
+                    <TextInput style={styles.input} value={minArea.toString()} keyboardType="numeric" placeholder="Area [m²]" onChangeText={(e) => setMinArea(e.target)}/>
+                    <TextInput style={styles.input} value={maxPrice.toString()} keyboardType="numeric" placeholder="Max price [PLN]" onChangeText={(e) => setMaxPrice(e.target)}/>
+                    <View style={{ flex: 1,  height:300, width: 300}}>
+                        <MapView
+                            style={{ flex: 1}}
+                            initialRegion={{
+                            latitude: 52.2297, // Warszawa, szerokość geograficzna
+                            longitude: 21.0122, // Warszawa, długość geograficzna
+                            latitudeDelta: 0.0922,
+                            longitudeDelta: 0.0421,
+                            }}
+                            onPress={handleMapPress}
+                        >
+                            <Marker
+                            coordinate={{
+                                latitude: selectedLocation.latitude,
+                                longitude: selectedLocation.longitude,
+                            }}
+                            />
+                        </MapView>
+                    </View>
+                    <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>        
+            </ImageBackground>
         
+      </KeyboardAwareScrollView>
+
+
+
         
     );
   }

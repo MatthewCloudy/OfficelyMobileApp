@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackg
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LoginStore from '../../API/LoginStore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const image = require('../../assets/officePicture.jpg');
 
@@ -23,33 +24,41 @@ export function SignInPage() {
     const [password, setPassword] = useState();
 
     return (
-        <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-            <ScrollView >
+        <KeyboardAwareScrollView 
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        >
+            <ImageBackground source={image} resizeMode="cover" style={styles.image}>
                 <View >
-                    <View>
-                        <Text style={styles.title}>Sign In</Text>
-                    </View>
-                    
-                    <View style={styles.container}>
-                        <TextInput style={styles.input} 
-                        value={username} 
-                        placeholder="Username" 
-                        onChangeText={text => setUsername(text)}/>
-                        <TextInput 
-                        style={styles.input}
-                        value={password}  
-                        placeholder="Password" 
-                        onChangeText={text => setPassword(text)}
-                        secureTextEntry={true}
-                        />
+                    <View >
+                        <View>
+                            <Text style={styles.title}>Sign In</Text>
+                        </View>
+                        
+                        <View style={styles.container}>
+                            <TextInput style={styles.input} 
+                            value={username} 
+                            placeholder="Username" 
+                            onChangeText={text => setUsername(text)}/>
+                            <TextInput 
+                            style={styles.input}
+                            value={password}  
+                            placeholder="Password" 
+                            onChangeText={text => setPassword(text)}
+                            secureTextEntry={true}
+                            />
 
-                        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-                            <Text style={styles.buttonText}>Sign in</Text>
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                                <Text style={styles.buttonText}>Sign in</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-            </ScrollView>
-        </ImageBackground>
+                <View style={styles.view}>
+
+                </View>
+            </ImageBackground>
+        </KeyboardAwareScrollView>
+        
     );
   }
 
@@ -104,4 +113,7 @@ title: {
     textAlign: 'center',
     marginBottom: 20,
   },
+view: {
+    marginBottom: 340,
+},
 });

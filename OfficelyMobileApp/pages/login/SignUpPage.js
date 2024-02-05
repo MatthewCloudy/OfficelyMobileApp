@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackg
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LoginStore from '../../API/LoginStore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const image = require('../../assets/officePicture.jpg');
 
@@ -22,6 +23,9 @@ export function SignUpPage() {
     const [password, setPassword] = useState();
 
     return (
+        <KeyboardAwareScrollView 
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+        >
         <ImageBackground source={image} resizeMode="cover" style={styles.image}>
             <ScrollView >
                 <View >
@@ -54,9 +58,13 @@ export function SignUpPage() {
                             <Text style={styles.buttonText}>Sign up</Text>
                         </TouchableOpacity>
                     </View>
+                    <View style={styles.view}>
+
+                    </View>
                 </View>
             </ScrollView>
         </ImageBackground>
+        </KeyboardAwareScrollView>
     );
   }
 
@@ -111,4 +119,7 @@ title: {
     textAlign: 'center',
     marginBottom: 20,
   },
+view: {
+    marginBottom: 260,
+},
 });
