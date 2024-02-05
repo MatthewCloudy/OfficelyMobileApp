@@ -21,7 +21,7 @@ export const useStore = create((set) => ({
     sort: "",
     sortOrder: "",
 
-    officeId: 1,
+    officeId: 41,
 
     // Setters
     setPageSize: (newValue) => set({ pageSize: newValue }),
@@ -42,6 +42,29 @@ export const useStore = create((set) => ({
     setSortOrder: (newValue) => set({ sortOrder: newValue }),
     
     setOfficeId: (newValue) => set({ officeId: newValue }),
+
+    setDefault: () => {
+        set({
+          pageSize: 10,
+          pageNum: 0,
+          latitude: 52.2297,
+          longitude: 21.0122,
+          availableFrom: new Date(),
+          availableTo: new Date(),
+          maxDistance: "",
+          name: "",
+          minPrice: "",
+          maxPrice: "",
+          amenities: [],
+          officeType: "",
+          minRating: 0,
+          minArea: "",
+          sort: "",
+          sortOrder: "",
+          officeId: 41,
+        });
+      },
+
 }));
 
 

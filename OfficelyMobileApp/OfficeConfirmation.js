@@ -3,26 +3,19 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store.js';
+import OfficeStore from './API/OfficeStore.js';
 
 export function OfficeConfirmation() {
     const navigation = useNavigation();
     const [officeDetails, setOfficeDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { officeId } = useStore();
-    
+    const { officeId, setDefault, maxDistance } = useStore();
     
     useEffect(() => {
-        const accessToken = "eyJhbGciOiJIUzI1NiJ9.eyJpcCI6Ijg4LjE1Ni4xMzkuNTI6NDc1MDciLCJ1c2VyLWFnZW50IjoiTW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzEyMS4wLjAuMCBTYWZhcmkvNTM3LjM2Iiwic3ViIjoiYWRtaW4iLCJpYXQiOjE3MDcwNjg2MTAsImV4cCI6MTcwNzE1NTAxMH0.DTDLcstV2GEBBFD5NtoSWX6Sq_zG7mWDGPqNXgVxkGI"; // Tutaj wprowadź swój token autoryzacyjny
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://officely.azurewebsites.net/offices/${officeId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${accessToken}`, // Dodaj token autoryzacji
-                    },
-                });
+                const response = await OfficeStore.getState().fetchOffice(officeId);
                 const data = await response.json();
 
                 setOfficeDetails(data);
@@ -37,7 +30,13 @@ export function OfficeConfirmation() {
     }, []);
 
     const handleConfirm = () => {
+        // TODO: Zmienic status office na zarezerwowany API /reservation POST
         navigation.navigate('ParkingSpots');
+    };
+
+    const handleAbort = () => {
+        setDefault();
+        navigation.navigate('HomePage');
     };
 
     return (
@@ -51,9 +50,16 @@ export function OfficeConfirmation() {
                 ) : error ? (
                     <Text>Error fetching data</Text>
                 ) : (
-                    <View>
-                        <Text>{JSON.stringify(officeDetails)}</Text>
-                    </View>
+                <View>
+                    <Text style={styles.detailText}>Name: {officeDetails.name}</Text>
+                    <Text style={styles.detailText}>Address: {officeDetails.address}</Text>
+                    <Text style={styles.detailText}>Description: {officeDetails.description}</Text>
+                    <Text style={styles.detailText}>Office Type: {officeDetails.officeType}</Text>
+                    <Text style={styles.detailText}>Office Area: {officeDetails.officeArea} m²</Text>
+                    <Text style={styles.detailText}>Price Per Day: {officeDetails.pricePerDay} PLN</Text>
+                    <Text style={styles.detailText}>Rating: {officeDetails.rating}</Text>
+                    <Text style={styles.detailText}>Rent time: from - to</Text>
+                  </View>
                 )}
             </View>
 
@@ -65,6 +71,9 @@ export function OfficeConfirmation() {
                     <Text>Payment will be done at the first day of rent by cash to owner</Text>
                 </View>
                 <View style={styles.paymentBox}>
+                    <TouchableOpacity style={styles.button} onPress={handleAbort}>
+                        <Text style={styles.buttonText}>Abort</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={handleConfirm}>
                         <Text style={styles.buttonText}>Confirm rent</Text>
                     </TouchableOpacity>
@@ -83,6 +92,11 @@ container: {
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
+},
+detailText: {
+    fontSize: 16,
+    color: '#333',
+    marginVertical: 5,
 },
 paymentBox: {
     flexDirection: 'row',

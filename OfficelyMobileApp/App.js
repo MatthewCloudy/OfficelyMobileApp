@@ -82,12 +82,16 @@ export default function App() {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
+          tabBarActiveTintColor: 'gray', // Kolor ikony dla aktywnego ekranu
+          tabBarInactiveTintColor: 'gray', // Kolor ikony dla nieaktywnego ekranu
+          tabBarStyle: [
+            {
+              display: 'flex',
+            },
+            null,
+          ],
         })}
-        tabBarOptions={{
-          activeTintColor: 'gray', // Kolor ikony dla aktywnego ekranu
-          inactiveTintColor: 'gray', // Kolor ikony dla nieaktywnego ekranu
-        }}
-        
+
       >
         <Tab.Screen name="Home" component={HomeStack} />
         <Tab.Screen name="My reservations" component={ReservationStack} />
