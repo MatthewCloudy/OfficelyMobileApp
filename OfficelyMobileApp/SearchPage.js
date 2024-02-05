@@ -15,8 +15,6 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export function SearchPage()  {
-  const [address, setAddress] = useState('');
-  const [numberOfPeople, setNumberOfPeople] = useState('');
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
   const [offers, setOffers] = useState([
@@ -80,6 +78,13 @@ export function SearchPage()  {
     "PETS_ALLOWED",
     "SMOKING_AREA"
   ];
+  const sortsList=[
+    "name",
+"pricePerDay",
+"amenities",
+"rating",
+"officeArea"
+  ]
   const officeTypeList = [
     {key:'1', value:"CONFERENCE_ROOM"},
     {key:'2', value:"COWORKING_SPACE"},
@@ -220,18 +225,8 @@ export function SearchPage()  {
       </TouchableOpacity>
 
       <Collapsible collapsed={collapsed}>
-        <ScrollView>
-        <TextInput
-        placeholder="Address"
-        value={address}
-        onChangeText={(text) => setAddress(text)}
-      />
-      <TextInput
-        placeholder="Number of seats"
-        value={numberOfPeople}
-        onChangeText={(text) => setNumberOfPeople(text)}
-        keyboardType="numeric"
-      />
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        
       <TextInput
         placeholder="First day of reservation"
         value={'from ' + startDate.toDateString()}
@@ -272,20 +267,21 @@ export function SearchPage()  {
           onChange={handleEndDateChange}
       />
       )}
+      <Text>Max distance (km):</Text>
       <TextInput
         placeholder="Max distance (km)"
         value={maxDistance}
         onChangeText={setMaxDistance}
         keyboardType="numeric"
       />
+      <Text>Minimum price (PLN/day):</Text>
       <TextInput
-        placeholder="Minimum price (PLN/day)"
         value={minPrice}
         onChangeText={setMinPrice}
         keyboardType="numeric"
       />
+      <Text>Maximum price (PLN/day):</Text>
       <TextInput
-        placeholder="Maximum price (PLN/day)"
         value={maxPrice}
         onChangeText={setMaxPrice}
         keyboardType="numeric"
@@ -302,12 +298,14 @@ export function SearchPage()  {
         setSelected={(val) => setOfficeType(val)} 
         data={officeTypeList} 
         save="value"
+        defaultOption={{key:'4', value:"OFFICE"}}
     />
       <Text>Minimum rating:</Text>
       <SelectList 
         setSelected={(val) => setMinRating(val)} 
         data={ratings} 
         save="value"
+        defaultOption={{key:'1', value:"1"}}
     />
     <Text>Minimum area:</Text>
     <TextInput
@@ -316,6 +314,15 @@ export function SearchPage()  {
         onChangeText={setMinArea}
         keyboardType="numeric"
       />
+      <Text>Sort by:</Text>
+      <SelectList 
+        setSelected={(val) => setSort(val)} 
+        data={sortsList} 
+        save="value"/>
+        <View style={styles.row}>
+        <CheckBox disabled={false} value={sortOrder==null} onValueChange={(value) => setSortOrder(sortOrder==null? "DESC" : null)}/>
+        <Text>Sort in descending order</Text>
+        </View>
       <Button title='Filter search'/>
         </ScrollView>
       
