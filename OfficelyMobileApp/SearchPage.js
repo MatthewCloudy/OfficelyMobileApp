@@ -132,7 +132,7 @@ export function SearchPage()  {
           minPrice: minPrice,
           maxPrice: maxPrice,
           amenities: amenities,
-          //officeType: officeType,
+          officeType: officeTypeList.find(x => x.key === officeType).value,
           minRating: minRating,
           minArea: minArea,
           sort: sort,
@@ -170,19 +170,20 @@ export function SearchPage()  {
   const handleFilterClick = (event) => {
       querryOffices(pageSize, pageNum, 
         {
-        location: latitude,
-        availableFrom: availableFrom.toISOString(),
-        availableTo: availableTo.toISOString(),
-        maxDistance: maxDistance,
-        name: name,
-        minPrice: minPrice,
-        maxPrice: maxPrice,
-        amenities: amenities,
-        //officeType: officeType,
-        minRating: minRating,
-        minArea: minArea,
-        sort: sort,
-        sortOrder: sortOrder})
+          availableFrom: availableFrom.toISOString(),
+          availableTo: availableFrom.toISOString(),
+          maxDistance: maxDistance,
+          name: name,
+          minPrice: minPrice,
+          maxPrice: maxPrice,
+          amenities: amenities,
+          officeType: officeTypeList.find(x => x.key === officeType).value,
+          minRating: minRating,
+          minArea: minArea,
+          sort: sort,
+          sortOrder: sortOrder,
+          lat: latitude,
+          lng: longitude})
       .then(response => {
           if (!response.ok) {
               throw new Error('No office fetched');
