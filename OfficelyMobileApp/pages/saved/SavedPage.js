@@ -3,6 +3,8 @@ import { View} from 'react-native';
 import SavedStore from '../../API/SavedStore';
 import OfficeStore from '../../API/OfficeStore';
 import { Text } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
+import SavedItem from './SavedItem';
 
 export function SavedPage({navigation})
 {
@@ -20,7 +22,8 @@ export function SavedPage({navigation})
                 return response.json();
               })
             .then((data) => {
-
+                let offices = [];
+                SavedStore.getState().setSaved([]);
                 for (let i = 0; i < data.length; i++) {
                     OfficeStore.getState().fetchOffice(data[i])
                     .then(response => {
@@ -31,13 +34,12 @@ export function SavedPage({navigation})
                       })
                     .then((data) => {
                         const newItem = data;
-                        let updatedItems = savedOffices;
-                        updatedItems.push(newItem);
-                        setSavedOffices( updatedItems );
-                        SavedStore.getState().setSaved(data);
+                        offices.push(newItem);
+                        setSavedOffices( offices );
+                        SavedStore.getState().setSaved(newItem);
                     })
                     .catch((error) => console.error('Error:', error));
-                }             
+                }          
             })
         }
         return unsubscribe;
@@ -45,8 +47,18 @@ export function SavedPage({navigation})
     
     return (
         <View>
-            <Text> Saved Offices {savedOffices}</Text>
+            <FlatList
+                style = {styles.list}
+                data = {savedOffices}
+                renderItem = {SavedItem}
+                keyExtractor = {(item) => item.id}
+            />
         </View>
     );
 };
 
+const styles = {
+    list: {
+        flexDirection: 'column',       
+    }
+}
