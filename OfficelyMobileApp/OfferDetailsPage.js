@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import StarRating from 'react-native-star-rating';
+import { useStore } from './store';
+import OfficeStore from './API/OfficeStore';
+import { useNavigation } from '@react-navigation/native';
 
 const officeDescription = `
 Welcome to our dynamic and collaborative office space, where innovation meets productivity in a modern and inviting environment. Nestled in the heart of Warsaw, our office is designed to inspire creativity and foster teamwork.
@@ -22,57 +25,79 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export function OfferDetailsPage() {
-  const [offerData, setOfferData] = useState({
-    image: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
-    name: 'My First Office',
-    rating: 4,
-    price: 19.99,
-    address: 'Warsaw, Krucza 7',
-    description: officeDescription,
-  });
+  // const [offerData, setOfferData] = useState({
+  //   image: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
+  //   name: 'My First Office',
+  //   rating: 4,
+  //   price: 19.99,
+  //   address: 'Warsaw, Krucza 7',
+  //   description: officeDescription,
+  // });
+  const navigation = useNavigation();
+  const [offerData, setOfferData] = useState();
+  const { officeId } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
 
-  //useEffect(() => {
-    // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
-    //fetch('YOUR_API_ENDPOINT')
-    //  .then((response) => response.json())
-    //  .then((data) => setOfferData(data))
-    //  .catch((error) => console.error('Error fetching data:', error));
-  //}, []);
+      const fetchData = async () => {
+          try {
+            setIsLoading(true);
+              const response = await OfficeStore.getState().fetchOffice(officeId);
+              const data = await response.json();
 
+              setOfferData(data);
+              setIsLoading(false);
+          } catch (error) {
+              //setError(error);
+              setIsLoading(false);
+          }
+      };
+
+      fetchData();
+  }, [setOfferData]);
 
   const handleReserve = () => {
-    // Handle reservation logic here
-    console.log('Booking confirmed!');
-    // You can navigate to a confirmation page or perform other actions
+    navigation.navigate("OfficeConfirmation");
   };
 
-  if (!offerData) {
-    return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
+  // if (!offerData) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text>Loading...</Text>
+  //     </View>
+  //   );
+  // }
   
+  if(isLoading)
+  {
+    return(<Text>Loading...</Text>);
+    
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.container}>
-            <Image source={{ uri: offerData.image }} style={styles.image} resizeMode='cover' />
-            <StarRating
-                disabled={true}
-                maxStars={5}
-                rating={offerData.rating}
-                fullStarColor={'#FFD700'}
-                starSize={40}
-            />
-            <Text style={styles.name}>{offerData.name}</Text>
-            <Text style={styles.price}>Price: ${offerData.price} / day</Text>
-            <Text style={styles.address}>Address: {offerData.address}</Text>
-            <Text style={styles.description}>{offerData.description}</Text>
-            <Button title="Reserve" onPress={handleReserve} />
-        </View>
-    </ScrollView>
+    {offerData ? (
+      <View style={styles.container}>
+        <Image source={{ uri: offerData.mainPhoto }} style={styles.image} resizeMode='cover' />
+        <StarRating
+          disabled={true}
+          maxStars={5}
+          rating={offerData.rating}
+          fullStarColor={'#FFD700'}
+          starSize={40}
+        />
+        <Text style={styles.name}>{offerData.name}</Text>
+        <Text style={styles.price}>Price: ${offerData.pricePerDay} / day</Text>
+        <Text style={styles.address}>Address: {offerData.address}</Text>
+        <Text style={styles.description}>{offerData.description}</Text>
+        <Button title="Reserve" onPress={handleReserve} />
+      </View>
+    ) : (
+      <View style={styles.container}>
+        <Text>No data available</Text>
+      </View>
+    )}
+  </ScrollView>
     
   );
 };

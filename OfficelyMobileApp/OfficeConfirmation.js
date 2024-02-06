@@ -10,7 +10,7 @@ export function OfficeConfirmation() {
     const [officeDetails, setOfficeDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { officeId, setDefault, maxDistance } = useStore();
+    const { officeId, setDefault, maxDistance, availableFrom, availableTo } = useStore();
     
     useEffect(() => {
         const fetchData = async () => {
@@ -30,7 +30,10 @@ export function OfficeConfirmation() {
     }, []);
 
     const handleConfirm = () => {
+        // TODO
         // TODO: Zmienic status office na zarezerwowany API /reservation POST
+        // TODO
+
         navigation.navigate('ParkingSpots');
     };
 
@@ -38,7 +41,10 @@ export function OfficeConfirmation() {
         setDefault();
         navigation.navigate('HomePage');
     };
-
+    const formatDateString = (dateString) => {
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+      };
     return (
         <ScrollView style={styles.main}>
             <View>
@@ -58,7 +64,8 @@ export function OfficeConfirmation() {
                     <Text style={styles.detailText}>Office Area: {officeDetails.officeArea} m²</Text>
                     <Text style={styles.detailText}>Price Per Day: {officeDetails.pricePerDay} PLN</Text>
                     <Text style={styles.detailText}>Rating: {officeDetails.rating}</Text>
-                    <Text style={styles.detailText}>Rent time: from - to</Text>
+                    <Text style={styles.detailText}>Rent starts: {formatDateString(availableFrom)}</Text>
+                    <Text style={styles.detailText}>Rent ends: {formatDateString(availableTo)}</Text>
                   </View>
                 )}
             </View>

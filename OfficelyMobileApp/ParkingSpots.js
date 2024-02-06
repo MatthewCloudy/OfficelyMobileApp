@@ -132,6 +132,7 @@ export function ParkingSpots() {
           const token = await getParklyToken();
           console.log(token);
           setParkingToken(token);
+
           const response = await getParkings(countryCode,cityName,availableFrom,availableTo,latitude,longitude,token);
           console.log(response);
 

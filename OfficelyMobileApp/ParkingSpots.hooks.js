@@ -1,5 +1,8 @@
 
-
+const apiUrl1="https://parkingi.azurewebsites.net";
+const apiUrl2="https://parkingi.azurewebsites.net";
+const apiUrl3="https://3f19-194-29-137-24.ngrok-free.app";
+//            'Accept': '*/*',
 export const getCityAndCountry = async (latitude, longitude) => {
     try {
     const apiKey = "AIzaSyCu4u7lfHE-XWI8Bh1AOeLn0SoUw_kRXOU";
@@ -40,7 +43,7 @@ export const getCityAndCountry = async (latitude, longitude) => {
   
 export const getParklyToken = async () => {
       try {
-        const response = await fetch('https://parkingi.azurewebsites.net/auth/login', {
+        const response = await fetch(`${apiUrl1}/auth/login`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -71,11 +74,10 @@ export const getParkings = async (countryCode,cityName,availableFrom,availableTo
             page: 0,
             size: 10,
         });
-        const url = `https://parkingi.azurewebsites.net/user/car_park?${queryParams.toString()}`;
+        const url = `${apiUrl1}/user/car_park?${queryParams.toString()}`;
         const response = await fetch(url, {
         method: 'GET',
         headers: {
-            'Accept': '*/*',
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
