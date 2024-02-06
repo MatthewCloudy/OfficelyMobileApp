@@ -18,48 +18,7 @@ const windowHeight = Dimensions.get('window').height;
 export function SearchPage()  {
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
-  const [offers, setOffers] = useState([
-    {
-      id: 1,
-      mainPhoto: 'https://www.ceosuite.com/wp-content/uploads/2016/05/lkg-office900.jpg',
-      name: 'First Sample Office',
-      address: 'Koszykowa 1, Warsaw',
-      rating: 5,
-      pricePerDay: '$19.99',
-    },
-    {
-      id: 2,
-      mainPhoto: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg',
-      name: 'Second Sample Office',
-      address: 'Koszykowa 2, Warsaw',
-      rating: 3,
-      pricePerDay: '$17.00',
-    },
-    {
-      id: 3,
-      mainPhoto: 'https://st3.depositphotos.com/12071432/18440/i/450/depositphotos_184405718-stock-photo-working-tables-computers-laptops-business.jpg',
-      name: 'Third Sample Office',
-      address: 'Koszykowa 3, Warsaw',
-      rating: 3,
-      pricePerDay: '$13.50',
-    },
-    {
-      id: 4,
-      mainPhoto: 'https://img.freepik.com/premium-photo/interior-empty-office-with-glass-partitions-loft-style-view-city-park_124507-32995.jpg',
-      name: 'Fourth Sample Office',
-      address: 'Koszykowa 4, Warsaw',
-      rating: 4,
-      pricePerDay: '$34.00',
-    },
-    {
-      id: 5,
-      mainPhoto: 'https://assets-global.website-files.com/5e72120a6f610062d1dae3b5/63b65f840f5cd6eef15b8aad_3A5A9831-min.jpg',
-      name: 'Fifth Sample Office',
-      address: 'Koszykowa 5, Warsaw',
-      rating: 3,
-      pricePerDay: '$27.00',
-    },
-  ]);
+   const [offers, setOffers] = useState([]);
   const [collapsed, setCollapsed] = useState(true);
   const amenitiesList = [
     "WIFI",
@@ -123,6 +82,7 @@ export function SearchPage()  {
 
   useEffect(() => {
     // Pobieranie ofert z API - przykład użycia fetch()
+    setOfficeType("OFFICE");
         querryOffices(pageSize, pageNum, 
           {
           availableFrom: availableFrom.toISOString(),
@@ -132,7 +92,7 @@ export function SearchPage()  {
           minPrice: minPrice,
           maxPrice: maxPrice,
           amenities: amenities,
-          officeType: officeTypeList.find(x => x.key === officeType).value,
+          officeType: "OFFICE",
           minRating: minRating,
           minArea: minArea,
           sort: sort,
@@ -153,7 +113,7 @@ export function SearchPage()  {
           })
         .catch((error) => console.error('Error:', error));
     
-  }, [])
+  }, [setOfficeType])
   
 
 
@@ -168,6 +128,7 @@ export function SearchPage()  {
   };
 
   const handleFilterClick = (event) => {
+    console.log(officeType)
       querryOffices(pageSize, pageNum, 
         {
           availableFrom: availableFrom.toISOString(),
@@ -177,7 +138,7 @@ export function SearchPage()  {
           minPrice: minPrice,
           maxPrice: maxPrice,
           amenities: amenities,
-          officeType: officeTypeList.find(x => x.key === officeType).value,
+          officeType: officeType,
           minRating: minRating,
           minArea: minArea,
           sort: sort,

@@ -71,7 +71,6 @@ function querryOffices(pageSize, pageNum, parameters) {
 
   let querryUrl = `${url}/offices?pageSize=${pageSize}&pageNum=${pageNum}`;
   let querry = objectToQueryString(parameters);
-  console.log(parameters.officeType);
   console.log(querry);
   querryUrl = querryUrl + '&' + querry;
   return fetch(`${querryUrl}`, {
