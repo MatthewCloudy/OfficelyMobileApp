@@ -11,11 +11,15 @@ import OfficeStore from './API/OfficeStore';
 import LoginStore from './API/LoginStore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { querryOffices } from './API/OfficeStore';
+import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 export function SearchPage()  {
+
+  const navigation = useNavigation();
+
   const [isStartDatePickerVisible, setStartDatePickerVisible] = useState(false);
   const [isEndDatePickerVisible, setEndDatePickerVisible] = useState(false);
    const [offers, setOffers] = useState([]);
@@ -77,7 +81,8 @@ export function SearchPage()  {
     sort, setSort,
     sortOrder, setSortOrder,
     startDate, setStartDate,
-    endDate, setEndDate
+    endDate, setEndDate,
+    officeId, setOfficeId,
   } = useStore();
 
   useEffect(() => {
@@ -159,21 +164,16 @@ export function SearchPage()  {
       .catch((error) => console.error('Error:', error));
   };
 
+  const handleOfficeClick = (id) => {
+    setOfficeId(id);
+    navigation.navigate("OfferDetailsPage");
+  }
+
 
   const toggleExpand = () => {
     setCollapsed(!collapsed);
   }
 
-  const handleMapPress = (event) => {
-    const { coordinate } = event.nativeEvent;
-    setLatitude(coordinate.latitude);
-    setLongitude(coordinate.longitude);
-    
-    setSelectedLocation({
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-    });
-  };
 
   function toggleItemInArray(array, setFunc, item) {
     const index = array.indexOf(item);
@@ -312,7 +312,7 @@ export function SearchPage()  {
   contentContainerStyle={styles.scrollContainer}
   renderItem={({ item }) => (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => console.log('office pressed')}>
+      <TouchableOpacity onPress={() => handleOfficeClick(item.id)}>
         <Image source={{ uri: item.mainPhoto }} style={styles.image} />
         <StarRating
           disabled={true}
@@ -324,7 +324,7 @@ export function SearchPage()  {
         <Text style={styles.name}>{item.name}</Text>
         <Text>{item.address}</Text>
         <Text>{`Price: ${item.pricePerDay} / day`}</Text>
-        <TouchableOpacity onPress={() => console.log('Add to favorites pressed')}>
+        <TouchableOpacity onPress={() => console.log("favorites pressed")}>
           <Text>Add to Favorites / Remove from Favorites</Text>
         </TouchableOpacity>
       </TouchableOpacity>
