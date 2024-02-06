@@ -4,13 +4,14 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store.js';
 import OfficeStore from './API/OfficeStore.js';
+import LoginStore from './API/LoginStore.js';
 
 export function OfficeConfirmation() {
     const navigation = useNavigation();
     const [officeDetails, setOfficeDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { officeId, setDefault, maxDistance, availableFrom, availableTo } = useStore();
+    const { officeId, setDefault, maxDistance, availableFrom, availableTo, startDate, endDate } = useStore();
     
     useEffect(() => {
         const fetchData = async () => {
@@ -29,13 +30,54 @@ export function OfficeConfirmation() {
         fetchData();
     }, []);
 
-    const handleConfirm = () => {
-        // TODO
-        // TODO: Zmienic status office na zarezerwowany API /reservation POST
-        // TODO
+    // const handleConfirm = () => {
+    //     // TODO
+    //     // TODO: Zmienic status office na zarezerwowany API /reservation POST
+    //     // TODO
 
-        navigation.navigate('ParkingSpots');
+    //     navigation.navigate('ParkingSpots');
+    // };
+
+    const reserveOffice = async (userId, officeId, startDateTime, endDateTime, token) => {
+        try {
+            const url = `https://officely.azurewebsites.net/reservations`;
+            const requestBody = [
+                {
+                    userId: userId,
+                    officeId: officeId,
+                    startDateTime: startDateTime,
+                    endDateTime: endDateTime
+                }
+            ];
+    
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+    
+            return response;
+        } catch (error) {
+            console.log(error);
+        }
     };
+    
+    const handleConfirm = () => {
+
+        reserveOffice(0, officeId, startDate, endDate, LoginStore.getState().jwttoken)
+            .then(response => {
+                // Obsłuż odpowiedź z serwera, jeśli to konieczne
+                navigation.navigate('ParkingSpots');
+            })
+            .catch(error => {
+
+                navigation.navigate('BadPage');
+            });
+    };
+    
 
     const handleAbort = () => {
         setDefault();
@@ -64,8 +106,8 @@ export function OfficeConfirmation() {
                     <Text style={styles.detailText}>Office Area: {officeDetails.officeArea} m²</Text>
                     <Text style={styles.detailText}>Price Per Day: {officeDetails.pricePerDay} PLN</Text>
                     <Text style={styles.detailText}>Rating: {officeDetails.rating}</Text>
-                    <Text style={styles.detailText}>Rent starts: {formatDateString(availableFrom)}</Text>
-                    <Text style={styles.detailText}>Rent ends: {formatDateString(availableTo)}</Text>
+                    <Text style={styles.detailText}>Rent starts: {formatDateString(startDate)}</Text>
+                    <Text style={styles.detailText}>Rent ends: {formatDateString(endDate)}</Text>
                   </View>
                 )}
             </View>

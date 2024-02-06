@@ -103,6 +103,8 @@ export function ParkingSpots() {
       setParkingToken,
       availableTo,
       availableFrom,
+      startDate,
+      endDate,
     } = useStore();
 
     const [spots, setSpots] = useState([]);
@@ -130,10 +132,10 @@ export function ParkingSpots() {
           setCountryCode(geoData.countryCode);
     
           const token = await getParklyToken();
-          console.log(token);
+
           setParkingToken(token);
 
-          const response = await getParkings(countryCode,cityName,availableFrom,availableTo,latitude,longitude,token);
+          const response = await getParkings(countryCode,cityName,startDate.toISOString().split('.')[0],endDate.toISOString().split('.')[0],latitude,longitude,token);
           console.log(response);
 
           const parks = await response.json();
@@ -188,7 +190,7 @@ export function ParkingSpots() {
               <Text style={styles.buttonText}>No thanks, I'm done</Text>
           </TouchableOpacity>
             <FlatList
-                data={DATA}
+                data={spots}
                 renderItem={({item}) => <Item parking={item} />}
                 keyExtractor={item => item.id}
             />

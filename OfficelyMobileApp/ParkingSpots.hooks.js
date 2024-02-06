@@ -74,18 +74,20 @@ export const getParkings = async (countryCode,cityName,availableFrom,availableTo
             page: 0,
             size: 10,
         });
-        const url = `${apiUrl1}/user/car_park?${queryParams.toString()}`;
+        //const url = `${apiUrl1}/user/car_park?${queryParams.toString()}`;
+
+        const url = `${apiUrl1}/user/car_park?countryName=${countryCode}&cityName=${cityName}&startDateTime=${availableFrom}&endDateTime=${availableTo}&dailyCostMin=1&dailyCostMax=1000&searchLatitude=${latitude}&searchLongitude=${longitude}&searchRadius=25&page=0&size=10`;
+        console.log(url);
+        
         const response = await fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+
         },
         });
 
-      const data = await response.json();
-      console.log(data);
-      return data;
+return response;
     } catch (error) {
         console.log(error);
      }

@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store.js';
 import OfficeStore from './API/OfficeStore.js';
+import LoginStore from "./API/LoginStore.js"
 
 export function ParkingConfirmation() {
     const navigation = useNavigation();
@@ -25,11 +26,52 @@ export function ParkingConfirmation() {
         parkingLatitude,
         parkingDailyCost,
         parkingDistanceKm,
+        startDate,
+        endDate,
+        parkingToken,
       } = useStore();
 
+    // const handleConfirm = () => {
+    //     // TODO: Zmienic status parking na zarezerwowany API PARKLY POST /user/reservation 
+    //     navigation.navigate('HomePage');
+    // };
+    const confirmReservation = async (carParkId, startDate, endDate, externalUserId, token) => {
+        try {
+            const url = `${apiUrl1}/user/reservation`;
+            const requestBody = {
+                carParkId: carParkId,
+                startDate: startDate,
+                endDate: endDate,
+                externalUserId: externalUserId
+            };
+    
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Dodaj tutaj nagłówki związane z tokenem, jeśli są wymagane
+                    // 'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(requestBody)
+            });
+    
+            const data = await response.json();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     const handleConfirm = () => {
-        // TODO: Zmienic status parking na zarezerwowany API PARKLY POST /user/reservation 
-        navigation.navigate('HomePage');
+        confirmReservation(parkingId, startDate, endDate, LoginStore.getState().user.id, parkingToken)
+            .then(response => {
+                navigation.navigate('OkPage');
+
+            })
+            .catch(error => {
+                navigation.navigate('BadPage');
+            });
     };
 
     const handleAbort = () => {
@@ -53,8 +95,8 @@ export function ParkingConfirmation() {
                     <Text style={styles.detailText}>Postal Code: {parkingPostalCode}</Text>
                     <Text style={styles.detailText}>Office Area: {officeDetails.officeArea} m²</Text>
                     <Text style={styles.detailText}>Price Per Day: {parkingDailyCost} PLN</Text>
-                    <Text style={styles.detailText}>Rent starts: {formatDateString(availableFrom)}</Text>
-                    <Text style={styles.detailText}>Rent ends: {formatDateString(availableTo)}</Text>
+                    <Text style={styles.detailText}>Rent starts: {formatDateString(startDate)}</Text>
+                    <Text style={styles.detailText}>Rent ends: {formatDateString(endDate)}</Text>
                 </View>
             </View>
 

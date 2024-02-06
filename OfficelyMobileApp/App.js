@@ -15,6 +15,8 @@ import { SignUpPage } from './pages/login/SignUpPage.js';
 import { SearchPage } from './SearchPage.js';
 import { OfferDetailsPage } from './OfferDetailsPage.js';
 import { SavedPage } from './pages/saved/SavedPage.js';
+import { OkPage } from './OkPage.js';
+import { BadPage } from './BadPage.js';
 
 import { Ionicons } from '@expo/vector-icons';
 import LoginStore from './API/LoginStore.js';
@@ -36,6 +38,8 @@ const HomeStack = () => (
     <Stack.Screen name="OfferDetailsPage" component={OfferDetailsPage} />
     <Stack.Screen name="SignInPage" component={SignInPage} />
     <Stack.Screen name="SignUpPage" component={SignUpPage} />
+    <Stack.Screen name="OkPage" component={OkPage} />
+    <Stack.Screen name="BadPage" component={BadPage} />
   </Stack.Navigator>
 );
 
