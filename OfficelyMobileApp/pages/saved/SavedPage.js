@@ -17,7 +17,7 @@ export function SavedPage({navigation})
             SavedStore.getState().fetchSaved()
             .then(response => {
                 if (!response.ok) {
-                    console.warn('No office fetched');
+                    console.warn('No saves fetched');
                 }
                 return response.json();
               })

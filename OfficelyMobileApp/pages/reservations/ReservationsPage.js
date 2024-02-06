@@ -19,7 +19,6 @@ export function ReservationsPage({navigation})
             .then((data) => {
                 ReservationStore.getState().setReservations(data);
                 setReservations(data);
-
                 setData([]);
                 for (let i = 0; i < reservations.length; i++) {
                     OfficeStore.getState().fetchOffice(reservations[i].officeId)
@@ -35,13 +34,11 @@ export function ReservationsPage({navigation})
                             office: data,
                             reservation: reservations[i]
                         };
-                        //console.log(newItem);
                         newItem;
                         setData((prev) => [...prev, newItem]);
                     })
                     .catch((error) => console.warn('Error:', error));
                 }
-                
             }).catch((error) => console.warn('Error:', error));
         }
         const unsubscribe = navigation.addListener('focus', fetchReservs);

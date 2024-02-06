@@ -79,7 +79,7 @@ export default function App() {
             } else if (route.name === 'My reservations') {
               iconName = focused && loggedIn ? 'calendar' : 'calendar-outline';
             } else if (route.name === 'Saved for later') {
-              iconName = focused && loggedIn ? 'calendar' : 'calendar-outline';
+              iconName = focused && loggedIn ? 'bookmark' : 'bookmark-outline';
             } else if (route.name === 'Profile') {
               iconName = focused && loggedIn? 'person' : 'person-outline';
             }
@@ -99,8 +99,8 @@ export default function App() {
 
       >
         <Tab.Screen name="Home" component={HomeStack} />
-        <Tab.Screen name="My reservations" component={loggedIn ? ReservationStack : HomeStack}/>
         <Tab.Screen name="Saved for later" component={loggedIn ? SavedStack : HomeStack}/>
+        <Tab.Screen name="My reservations" component={loggedIn ? ReservationStack : HomeStack}/> 
         <Tab.Screen name="Profile" component={loggedIn ? ProfileStack : HomeStack} />
       </Tab.Navigator>
       <StatusBar style="auto" />
