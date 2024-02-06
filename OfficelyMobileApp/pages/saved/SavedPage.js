@@ -17,7 +17,7 @@ export function SavedPage({navigation})
             SavedStore.getState().fetchSaved()
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('No office fetched');
+                    console.warn('No office fetched');
                 }
                 return response.json();
               })
@@ -28,7 +28,7 @@ export function SavedPage({navigation})
                     OfficeStore.getState().fetchOffice(data[i])
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('No office fetched');
+                            console.warn('No office fetched');
                         }
                         return response.json();
                       })
@@ -38,7 +38,7 @@ export function SavedPage({navigation})
                         setSavedOffices( offices );
                         SavedStore.getState().setSaved(newItem);
                     })
-                    .catch((error) => console.error('Error:', error));
+                    .catch((error) => console.warn('Error:', error));
                 }          
             })
         }

@@ -25,7 +25,7 @@ export function ReservationsPage({navigation})
                     OfficeStore.getState().fetchOffice(reservations[i].officeId)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('No office fetched');
+                            throw new Error('Your reservation was deleted!');
                         }
                         return response.json();
                     })
@@ -36,12 +36,13 @@ export function ReservationsPage({navigation})
                             reservation: reservations[i]
                         };
                         //console.log(newItem);
+                        newItem;
                         setData((prev) => [...prev, newItem]);
                     })
-                    .catch((error) => console.error('Error:', error));
+                    .catch((error) => console.warn('Error:', error));
                 }
                 
-            }).catch((error) => console.error('Error:', error));
+            }).catch((error) => console.warn('Error:', error));
         }
         const unsubscribe = navigation.addListener('focus', fetchReservs);
         return unsubscribe;
