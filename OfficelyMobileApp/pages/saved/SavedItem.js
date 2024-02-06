@@ -4,6 +4,7 @@ import { icon, library } from "@fortawesome/fontawesome-svg-core";
 import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import SavedStore from '../../API/SavedStore';
+import { useNavigation } from '@react-navigation/native';
 
 
 library.add(faSquareParking);
@@ -11,9 +12,12 @@ library.add( faTrashCan );
 
 const SavedItem = ({ item }) =>
 {
+    //const navigation = useNavigation();
+    
     const itemPressedHandler = () =>
     {
-        // TODO: navigate to office details
+        // setOfficeId(item.id);
+        // navigation.navigate("OfferDetailsPage");
     };
 
     const deleteHandler = () =>
@@ -29,8 +33,8 @@ const SavedItem = ({ item }) =>
     return (
     <TouchableOpacity onPress={itemPressedHandler}>
         <View style={styles.flex}>
-            <Image source={{ uri: item.mainPhoto}} style={styles.photo} />
-
+            {/* <Image source={{ uri: item.mainPhoto}} style={styles.photo} /> */}
+            <Image source={{ uri: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg'}} style={styles.photo} />
             <View>
                 <Text style={styles.title}>{item.name}</Text>
             </View>

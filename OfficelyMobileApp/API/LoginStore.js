@@ -92,7 +92,8 @@ const LoginStore = create((set) =>
         },
 	logout: 
         async () => 
-        {      
+        {
+            set({ jwttoken: "", user: {}})
             try {     
                 const response = await fetch(`${url}/auth/logout`, {
                   method: 'POST',
@@ -102,7 +103,6 @@ const LoginStore = create((set) =>
                     'Authorizatiox': `Bearer ${LoginStore.getState().jwttoken}`,
                   }
                 });
-                set({ jwttoken: "", user: {}})
                 if (!response.ok) {
                   throw new Error(`Request failed: ${response.statusText}`);
                 }
