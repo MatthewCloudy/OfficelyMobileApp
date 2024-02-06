@@ -165,8 +165,6 @@ export function SearchPage()  {
   };
 
   const handleOfficeClick = (id) => {
-    console.log("ID TERAZ");
-    console.log(id);
     setOfficeId(id);
     navigation.navigate("OfferDetailsPage");
   }
