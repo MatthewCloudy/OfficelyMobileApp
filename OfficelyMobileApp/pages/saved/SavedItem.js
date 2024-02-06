@@ -3,26 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icon, library } from "@fortawesome/fontawesome-svg-core";
 import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import SavedStore from '../../API/SavedStore';
 
 
 library.add(faSquareParking);
 library.add( faTrashCan );
 
-const ReservationItem = ({ item }) =>
+const SavedItem = ({ item }) =>
 {
     const itemPressedHandler = () =>
     {
-        // TODO: navigate to reservation details
-    };
-
-    const parkingHandler = () =>
-    {
-        // TODO: navigate to parking spots
+        // TODO: navigate to office details
     };
 
     const deleteHandler = () =>
     {
-        ReservationStore.getState().deleteReservation(item.reservation.id)
+        SavedStore.getState().deleteSaved(item.officeId)
     };
 
     const formatDate = (date) =>
@@ -33,20 +29,13 @@ const ReservationItem = ({ item }) =>
     return (
     <TouchableOpacity onPress={itemPressedHandler}>
         <View style={styles.flex}>
-            <Image source={{ uri: item.office.mainPhoto}} style={styles.photo} />
+            <Image source={{ uri: item.mainPhoto}} style={styles.photo} />
 
             <View>
-                <Text style={styles.title}>{item.office.name}</Text>
-                <Text style={styles.description}>
-                    {formatDate(item.reservation.startDateTime) + 
-                    " - " + formatDate(item.reservation.endDateTime)}
-                    </Text>
+                <Text style={styles.title}>{item.name}</Text>
             </View>
 
             <View style={{ flexDirection: 'column' }}>
-                <TouchableOpacity style={styles.button} onPress={parkingHandler}>
-                    <FontAwesomeIcon icon={faSquareParking} style={styles.icon} size={30}/>
-                </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={deleteHandler}>
                     <FontAwesomeIcon icon={faTrashCan} style={styles.icon} size={25}/>
                 </TouchableOpacity>
@@ -104,4 +93,4 @@ const styles = {
     }
 }
 
-export default ReservationItem;
+export default SavedItem;

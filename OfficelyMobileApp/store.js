@@ -15,7 +15,7 @@ export const useStore = create((set) => ({
     minPrice: "",
     maxPrice: "",
     amenities: [],
-    officeType: "",
+    officeType: "OFFICE",
     minRating: 0,
     minArea: "",
     sort: "",
