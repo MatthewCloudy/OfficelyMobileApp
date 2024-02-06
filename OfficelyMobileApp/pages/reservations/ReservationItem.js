@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { icon, library } from "@fortawesome/fontawesome-svg-core";
 import { faSquareParking } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
-
+import ReservationStore from '../../API/ReservationStore';
 
 library.add(faSquareParking);
 library.add( faTrashCan );
@@ -23,6 +23,12 @@ const ReservationItem = ({ item }) =>
     const deleteHandler = () =>
     {
         ReservationStore.getState().deleteReservation(item.reservation.id)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Your reservation was not deleted!');
+            }
+            return response.json();
+        })
     };
 
     const formatDate = (date) =>

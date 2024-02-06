@@ -308,7 +308,7 @@ export function SearchPage()  {
       
       <FlatList
   data={offers}
-  keyExtractor={(item) => item.id}
+  keyExtractor={(item) => item.id.toString()}
   contentContainerStyle={styles.scrollContainer}
   renderItem={({ item }) => (
     <View style={styles.container}>
@@ -363,5 +363,3 @@ row: {
   flexDirection: 'row',
 }
 });
-
-export default SearchPage;
