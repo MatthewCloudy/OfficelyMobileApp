@@ -28,6 +28,34 @@ export const useStore = create((set) => ({
 
     officeId: 41,
 
+    parkingId: 0,
+    parkingIso3166Country: 'PL',
+    parkingCityName: 'Lodz',
+    parkingPostalCode: '90-001',
+    parkingStreetName: 'Piotrkowska',
+    parkingBuildingNumber: '1415',
+    parkingLongitude: 19.45415,
+    parkingLatitude: 51.76873,
+    parkingDailyCost: 9,
+    parkingDistanceKm: 1.8,
+
+    cityName: "",
+    countryCode: "",
+
+    parkingToken: "",
+
+    // Setters
+    setParkingIso3166Country: (newValue) => set({ parkingIso3166Country: newValue }),
+    setParkingCityName: (newValue) => set({ parkingCityName: newValue }),
+    setParkingPostalCode: (newValue) => set({ parkingPostalCode: newValue }),
+    setParkingStreetName: (newValue) => set({ parkingStreetName: newValue }),
+    setParkingBuildingNumber: (newValue) => set({ parkingBuildingNumber: newValue }),
+    setParkingLongitude: (newValue) => set({ parkingLongitude: newValue }),
+    setParkingLatitude: (newValue) => set({ parkingLatitude: newValue }),
+    setParkingDailyCost: (newValue) => set({ parkingDailyCost: newValue }),
+    setParkingDistanceKm: (newValue) => set({ parkingDistanceKm: newValue }),
+
+
     // Setters
     setPageSize: (newValue) => set({ pageSize: newValue }),
     setPageNum: (newValue) => set({ pageNum: newValue }),
@@ -49,6 +77,12 @@ export const useStore = create((set) => ({
     setEndDate: (newValue) => set({ endDate: newValue }),
     
     setOfficeId: (newValue) => set({ officeId: newValue }),
+    setParkingId: (newValue) => set({ parkingId: newValue }),
+
+    setCityName: (newValue) => set({ cityName: newValue }),
+    setCountryCode: (newValue) => set({ countryCode: newValue }),
+
+    setParkingToken: (newValue) => set({ parkingToken: newValue }),
 
     setDefault: () => {
         set({

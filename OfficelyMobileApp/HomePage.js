@@ -44,7 +44,7 @@ export function HomePage() {
   };
 
   const handleSubmit = () => {
-    navigation.navigate('OfficeConfirmation');
+    navigation.navigate('ParkingSpots');
   };
 
   const handleMapPress = (event) => {
