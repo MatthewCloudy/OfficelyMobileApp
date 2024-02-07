@@ -5,5 +5,5 @@ Officely App is application for renting Offices. This application requests Parkl
 Our API is also shared to Flatly App (other team API). Check project brief for details.
 
 ## Other repositories
-Web App: https://github.com/AkhilAjith2/ReactProjectOfficely
+Web App: https://github.com/AkhilAjith2/ReactProjectOfficely \
 Backend: https://github.com/macinn/officely-backend
