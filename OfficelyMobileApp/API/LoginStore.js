@@ -47,7 +47,6 @@ const LoginStore = create((set) =>
         async (username, email, password) =>
         {
             try {
-                console.log(JSON.stringify([{id:0, username, password, email, isAdmin: false}]))
                 const response = await fetch(`${url}/users`, {
                 method: 'POST',
                 headers: {
@@ -84,7 +83,6 @@ const LoginStore = create((set) =>
                 }
                 const data = await response.json();
                 LoginStore.getState().updateData(data)
-                console.log(data)
             } catch (error) {
                 console.error('Register failed:', error.message);
                 throw error;

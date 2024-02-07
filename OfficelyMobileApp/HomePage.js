@@ -12,9 +12,7 @@ export function HomePage() {
   const navigation = useNavigation();
   const [loggedIn, setLoggedIn] = useState(false);
   const {
-    latitude,
     setLatitude,
-    longitude,
     setLongitude,
     maxDistance,
     setMaxDistance,
@@ -103,22 +101,18 @@ export function HomePage() {
                 },
               };
             } else {
-              //console.error('Error fetching place details:', detailsData.status);
               return null;
             }
           })
         );
   
-        // Filtruj null (niepowodzenia pobierania danych)
         const filteredLocations = locations.filter((location) => location !== null);
   
         setSuggestedLocations(filteredLocations);
       } else {
-        //console.error('Error fetching suggestions:', data.status);
         setSuggestedLocations([]);
       }
     } catch (error) {
-      //console.error('Error fetching suggestions:', error.message);
       setSuggestedLocations([]);
     }
   };

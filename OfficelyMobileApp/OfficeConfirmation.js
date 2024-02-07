@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store.js';
@@ -7,11 +6,12 @@ import OfficeStore from './API/OfficeStore.js';
 import LoginStore from './API/LoginStore.js';
 
 export function OfficeConfirmation() {
+    
     const navigation = useNavigation();
     const [officeDetails, setOfficeDetails] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const { officeId, setDefault, maxDistance, availableFrom, availableTo, startDate, endDate } = useStore();
+    const { officeId, setDefault, startDate, endDate } = useStore();
     
     useEffect(() => {
         const fetchData = async () => {
@@ -29,14 +29,6 @@ export function OfficeConfirmation() {
 
         fetchData();
     }, []);
-
-    // const handleConfirm = () => {
-    //     // TODO
-    //     // TODO: Zmienic status office na zarezerwowany API /reservation POST
-    //     // TODO
-
-    //     navigation.navigate('ParkingSpots');
-    // };
 
     const reserveOffice = async (userId, officeId, startDateTime, endDateTime, token) => {
         try {
@@ -61,7 +53,7 @@ export function OfficeConfirmation() {
     
             return response;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
     

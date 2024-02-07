@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, FlatList, TouchableOpacity, Image } from 'react-native';
+import { View, FlatList} from 'react-native';
 import ReservationItem from './ReservationItem';
 import ReservationStore from '../../API/ReservationStore';
 import OfficeStore from '../../API/OfficeStore';
@@ -15,7 +15,6 @@ export function ReservationsPage({navigation})
             .then((data) => {
                 ReservationStore.getState().setReservations(data);
                 setReservations(data);
-                //console.log(data);
                 setData([]);
                 let newD = [];
                 for (let i = 0; i < reservations.length; i++) {

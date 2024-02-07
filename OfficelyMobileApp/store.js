@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 export const useStore = create((set) => ({
+    
     // pages
     pageSize: 10,
     pageNum: 0,
@@ -52,8 +53,6 @@ export const useStore = create((set) => ({
     setParkingDailyCost: (newValue) => set({ parkingDailyCost: newValue }),
     setParkingDistanceKm: (newValue) => set({ parkingDistanceKm: newValue }),
 
-
-    // Setters
     setPageSize: (newValue) => set({ pageSize: newValue }),
     setPageNum: (newValue) => set({ pageNum: newValue }),
     setLatitude: (newValue) => set({ latitude: newValue }),
@@ -104,23 +103,3 @@ export const useStore = create((set) => ({
       },
 
 }));
-
-
-// const {
-//     pageSize, setPageSize,
-//     pageNum, setPageNum,
-//     latitude, setLatitude,
-//     longitude, setLongitude,
-//     availableFrom, setAvailableFrom,
-//     availableTo, setAvailableTo,
-//     maxDistance, setMaxDistance,
-//     name, setName,
-//     minPrice, setMinPrice,
-//     maxPrice, setMaxPrice,
-//     amenities, setAmenities,
-//     officeType, setOfficeType,
-//     minRating, setMinRating,
-//     minArea, setMinArea,
-//     sort, setSort,
-//     sortOrder, setSortOrder,
-//   } = useStore();

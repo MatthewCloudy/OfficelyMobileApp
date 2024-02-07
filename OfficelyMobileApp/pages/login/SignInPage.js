@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LoginStore from '../../API/LoginStore';

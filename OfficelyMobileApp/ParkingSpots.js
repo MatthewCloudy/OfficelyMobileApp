@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ActivityIndicator, SafeAreaView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, SafeAreaView, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store';
-import {getCityAndCountry, getParkings, getParklyToken} from './ParkingSpots.hooks.js';
+import { getCityAndCountry, getParkings, getParklyToken } from './ParkingSpots.hooks.js';
 
 const DATA = [
   {
@@ -99,10 +99,7 @@ export function ParkingSpots() {
       countryCode,
       setCityName,
       setCountryCode,
-      parkingToken,
       setParkingToken,
-      availableTo,
-      availableFrom,
       startDate,
       endDate,
     } = useStore();
@@ -136,7 +133,6 @@ export function ParkingSpots() {
           setParkingToken(token);
 
           const response = await getParkings(countryCode,cityName,startDate.toISOString().split('.')[0],endDate.toISOString().split('.')[0],latitude,longitude,token);
-          console.log(response);
 
           const parks = await response.json();
           setSpots(parks.content);

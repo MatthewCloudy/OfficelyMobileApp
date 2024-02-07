@@ -1,8 +1,6 @@
-
 const apiUrl1="https://parkingi.azurewebsites.net";
-const apiUrl2="https://parkingi.azurewebsites.net";
 const apiUrl3="https://3f19-194-29-137-24.ngrok-free.app";
-//            'Accept': '*/*',
+
 export const getCityAndCountry = async (latitude, longitude) => {
     try {
     const apiKey = "AIzaSyCu4u7lfHE-XWI8Bh1AOeLn0SoUw_kRXOU";
@@ -22,7 +20,6 @@ export const getCityAndCountry = async (latitude, longitude) => {
         let cityName = '';
         let countryCode = '';
   
-        // Pobierz nazwę miejscowości i kod kraju z odpowiedzi
         for (let component of addressComponents) {
           if (component.types.includes('locality')) {
             cityName = component.long_name;
@@ -33,10 +30,10 @@ export const getCityAndCountry = async (latitude, longitude) => {
   
         return { cityName, countryCode };
       } else {
-        throw new Error('Nie znaleziono danych geolokalizacyjnych');
+        throw new Error('Did not found data');
       }
     } catch (error) {
-      console.error('Błąd w pobieraniu danych geolokalizacyjnych:', error);
+      console.error('Error:', error);
       throw error;
     }
   };
@@ -75,9 +72,7 @@ export const getParkings = async (countryCode,cityName,availableFrom,availableTo
             size: 10,
         });
         //const url = `${apiUrl1}/user/car_park?${queryParams.toString()}`;
-
         const url = `${apiUrl1}/user/car_park?countryName=${countryCode}&cityName=${cityName}&startDateTime=${availableFrom}&endDateTime=${availableTo}&dailyCostMin=1&dailyCostMax=1000&searchLatitude=${latitude}&searchLongitude=${longitude}&searchRadius=25&page=0&size=10`;
-        console.log(url);
         
         const response = await fetch(url, {
         method: 'GET',
@@ -87,8 +82,8 @@ export const getParkings = async (countryCode,cityName,availableFrom,availableTo
         },
         });
 
-return response;
+        return response;
     } catch (error) {
-        console.log(error);
+        console.error(error);
      }
 };

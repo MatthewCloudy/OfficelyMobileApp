@@ -6,8 +6,7 @@ import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import SavedStore from '../../API/SavedStore';
 import { useNavigation } from '@react-navigation/native';
 
-
-library.add(faSquareParking);
+library.add( faSquareParking );
 library.add( faTrashCan );
 
 const SavedItem = ({ item }) =>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, ScrollView } from 'react-native';
 import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LoginStore from '../../API/LoginStore';
@@ -10,7 +10,6 @@ export function SignUpPage() {
 
     const navigation = useNavigation();
     const handleSubmit = () => {
-        console.log(username, email, password);
         LoginStore.getState().register(username, email, password)
         .then(() => {
         navigation.navigate('HomePage');

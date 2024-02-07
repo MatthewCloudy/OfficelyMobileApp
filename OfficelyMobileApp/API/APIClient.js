@@ -83,7 +83,6 @@ export class APIClient {
 
         const formData = new FormData();
 
-        console.log(input.files[0])
         formData.append('file', input.files[0]);
 
         const response = await fetch(uploadUrl, {
@@ -100,7 +99,6 @@ export class APIClient {
         }
   
         const data = await response.json();
-        console.log('Photo upload successful:', data);
       } catch (error) {
         console.error('Error during photo upload:', error.message);
         throw error;

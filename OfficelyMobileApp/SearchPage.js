@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Dimensions, StatusBar, Button, Keyboard, FlatList} from 'react-native';
+import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet, Dimensions, Button, Keyboard, FlatList} from 'react-native';
 import StarRating from 'react-native-star-rating';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from 'expo-checkbox';
 import { useStore } from './store.js';
 import Collapsible from 'react-native-collapsible';
-import MapView, { Marker } from 'react-native-maps';
 import { SelectList } from 'react-native-dropdown-select-list'
-import OfficeStore from './API/OfficeStore';
-import LoginStore from './API/LoginStore';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { querryOffices } from './API/OfficeStore';
 import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 export function SearchPage()  {
 
@@ -64,14 +59,13 @@ export function SearchPage()  {
   ]
 
   const {
-    pageSize, setPageSize,
-    pageNum, setPageNum,
-    latitude, setLatitude,
-    longitude, setLongitude,
-    availableFrom, setAvailableFrom,
-    availableTo, setAvailableTo,
+    pageSize,
+    pageNum,
+    latitude,
+    longitude,
+    availableFrom,
     maxDistance, setMaxDistance,
-    name, setName,
+    name,
     minPrice, setMinPrice,
     maxPrice, setMaxPrice,
     amenities, setAmenities,
@@ -82,11 +76,10 @@ export function SearchPage()  {
     sortOrder, setSortOrder,
     startDate, setStartDate,
     endDate, setEndDate,
-    officeId, setOfficeId,
+    setOfficeId,
   } = useStore();
 
   useEffect(() => {
-    // Pobieranie ofert z API - przykład użycia fetch()
     setOfficeType("OFFICE");
         querryOffices(pageSize, pageNum, 
           {
@@ -114,7 +107,6 @@ export function SearchPage()  {
         .then(data => 
           {
             setOffers(data)
-            console.log(data)
           })
         .catch((error) => console.error('Error:', error));
     
@@ -133,7 +125,6 @@ export function SearchPage()  {
   };
 
   const handleFilterClick = (event) => {
-    console.log(officeType)
       querryOffices(pageSize, pageNum, 
         {
           availableFrom: availableFrom.toISOString(),
@@ -159,7 +150,6 @@ export function SearchPage()  {
       .then(data => 
         {
           setOffers(data)
-          console.log(data)
         })
       .catch((error) => console.error('Error:', error));
   };
@@ -178,12 +168,8 @@ export function SearchPage()  {
   function toggleItemInArray(array, setFunc, item) {
     const index = array.indexOf(item);
     if (index === -1) {
-      // If the item is not in the array, add it
-      console.log("toggled item addition");
       setFunc([...array, item]);
     } else {
-      // If the item is in the array, remove it
-      console.log("toggled item removal");
       setFunc([...array.slice(0, index), ...array.slice(index + 1)]);
     }
   }
@@ -192,7 +178,6 @@ export function SearchPage()  {
   return (
     
     <View style={{ flex: 1, padding: 0, marginTop: 25 }}>
-      {/* Search Input Fields */}
 
       <TouchableOpacity onPress={toggleExpand}>
         <Text>Expand filters</Text>
@@ -313,7 +298,6 @@ export function SearchPage()  {
   renderItem={({ item }) => (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleOfficeClick(item.id)}>
-        {/* <Image source={{ uri: item.mainPhoto }} style={styles.image} /> */}
         <Image source={{ 
           uri: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg' }} style={styles.image} />
         <StarRating
@@ -326,7 +310,7 @@ export function SearchPage()  {
         <Text style={styles.name}>{item.name}</Text>
         <Text>{item.address}</Text>
         <Text>{`Price: ${item.pricePerDay} / day`}</Text>
-        <TouchableOpacity onPress={() => console.log("favorites pressed")}>
+        <TouchableOpacity>
           <Text>Add to Favorites / Remove from Favorites</Text>
         </TouchableOpacity>
       </TouchableOpacity>

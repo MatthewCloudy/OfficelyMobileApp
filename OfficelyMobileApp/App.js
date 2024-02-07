@@ -90,8 +90,8 @@ export default function App() {
 
             return <Ionicons name={iconName} size={size} color={color} />;
           },
-          tabBarActiveTintColor: 'gray', // Kolor ikony dla aktywnego ekranu
-          tabBarInactiveTintColor: 'gray', // Kolor ikony dla nieaktywnego ekranu
+          tabBarActiveTintColor: 'gray',
+          tabBarInactiveTintColor: 'gray',
           tabBarStyle: [
             {
               display: 'flex',

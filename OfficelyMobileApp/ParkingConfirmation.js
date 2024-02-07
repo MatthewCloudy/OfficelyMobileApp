@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useStore } from './store.js';
-import OfficeStore from './API/OfficeStore.js';
 import LoginStore from "./API/LoginStore.js"
 
 export function ParkingConfirmation() {
     const navigation = useNavigation();
     const [officeDetails, setOfficeDetails] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const { officeId, setDefault, maxDistance } = useStore();
+    const { setDefault} = useStore();
 
     const {
         parkingId,
@@ -20,21 +16,13 @@ export function ParkingConfirmation() {
         parkingPostalCode,
         parkingStreetName,
         parkingBuildingNumber,
-        availableFrom,
-        availableTo,
-        parkingLongitude,
-        parkingLatitude,
         parkingDailyCost,
-        parkingDistanceKm,
         startDate,
         endDate,
         parkingToken,
       } = useStore();
 
-    // const handleConfirm = () => {
-    //     // TODO: Zmienic status parking na zarezerwowany API PARKLY POST /user/reservation 
-    //     navigation.navigate('HomePage');
-    // };
+
     const confirmReservation = async (carParkId, startDate, endDate, externalUserId, token) => {
         try {
             const url = `${apiUrl1}/user/reservation`;
@@ -49,17 +37,14 @@ export function ParkingConfirmation() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Dodaj tutaj nagłówki związane z tokenem, jeśli są wymagane
                     // 'Authorization': `Bearer ${token}`
                 },
                 body: JSON.stringify(requestBody)
             });
-    
             const data = await response.json();
-            console.log(data);
             return data;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
     

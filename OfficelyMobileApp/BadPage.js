@@ -1,23 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
-import { useStore } from './store';
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-
 
 const image = require('./assets/officePicture.jpg');
 
 export function BadPage() {
     const navigation = useNavigation();
-    const handleOk = () => 
-        {
-            navigation.navigate("HomePage");
-        }
+    const handleOk = () => {
+      navigation.navigate("HomePage");
+    }
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}>
       <ImageBackground source={image} resizeMode="cover" style={styles.image}>
-            <Text style={styles.title}>Something wento wrong!</Text>
+            <Text style={styles.title}>Something went wrong!</Text>
             <TouchableOpacity style={styles.button} onPress={handleOk}>
               <Text style={styles.buttonText}>Ok {':('}</Text>
             </TouchableOpacity>

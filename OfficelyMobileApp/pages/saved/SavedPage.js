@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
-import { View} from 'react-native';
+import { View } from 'react-native';
 import SavedStore from '../../API/SavedStore';
 import OfficeStore from '../../API/OfficeStore';
-import { Text } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import SavedItem from './SavedItem';
 
