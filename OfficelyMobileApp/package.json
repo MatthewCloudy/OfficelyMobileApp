@@ -45,7 +45,8 @@
     "react-native-star-rating": "^1.1.0",
     "react-native-svg": "13.9.0",
     "react-native-web": "~0.19.6",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "expo-updates": "~0.18.19"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
