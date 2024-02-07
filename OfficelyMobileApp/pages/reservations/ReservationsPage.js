@@ -10,13 +10,16 @@ export function ReservationsPage({navigation})
     const [itemsData, setData] = React.useState([]);
 
     useEffect(() => {
+
+        const fetchReservs = () =>
+        {
             ReservationStore.getState().fetchReservations(10, 0)
             .then((response) => response.json())
             .then((data) => {
                 ReservationStore.getState().setReservations(data);
                 setReservations(data);
+
                 setData([]);
-                let newD = [];
                 for (let i = 0; i < reservations.length; i++) {
                     OfficeStore.getState().fetchOffice(reservations[i].officeId)
                     .then(response => {
@@ -31,14 +34,17 @@ export function ReservationsPage({navigation})
                             office: data,
                             reservation: reservations[i]
                         };
-                        newItem;
-                        newD.push(newItem);
-                        setData(newD);
+                        let updatedItems = itemsData;
+                        updatedItems.push(newItem);
+                        setData( updatedItems );
                     })
                     .catch((error) => console.warn('Error:', error));
                 }
             }).catch((error) => console.warn('Error:', error));
-    }, []);
+        }
+        const unsubscribe = navigation.addListener('focus', fetchReservs);
+        return unsubscribe;
+    }, [navigation]);
 
     return (
         <View>
