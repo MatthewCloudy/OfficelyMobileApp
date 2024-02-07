@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { useStore } from './store.js';
-import OfficeStore from './API/OfficeStore.js';
-import LoginStore from './API/LoginStore.js';
+import { useStore } from '../../store.js';
+import OfficeStore from '../../API/OfficeStore.js';
+import LoginStore from '../../API/LoginStore.js';
 
 export function OfficeConfirmation() {
     

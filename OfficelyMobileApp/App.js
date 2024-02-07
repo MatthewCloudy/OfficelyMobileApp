@@ -4,19 +4,19 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 
-import { HomePage } from './HomePage';
-import { ParkingSpots } from './ParkingSpots';
-import { ParkingConfirmation } from './ParkingConfirmation';
-import { OfficeConfirmation } from './OfficeConfirmation';
+import { HomePage } from './pages/home/HomePage';
+import { ParkingSpots } from './pages/parking/ParkingSpots';
+import { ParkingConfirmation } from './pages/parking/ParkingConfirmation';
+import { OfficeConfirmation } from './pages/offer/OfficeConfirmation';
 import { ProfilePage } from './pages/profile/ProfilePage';
 import { ReservationsPage } from './pages/reservations/ReservationsPage';
 import { SignInPage } from './pages/login/SignInPage';
 import { SignUpPage } from './pages/login/SignUpPage.js';
-import { SearchPage } from './SearchPage.js';
-import { OfferDetailsPage } from './OfferDetailsPage.js';
+import { SearchPage } from './pages/search/SearchPage.js';
+import { OfferDetailsPage } from './pages/offer/OfferDetailsPage.js';
 import { SavedPage } from './pages/saved/SavedPage.js';
-import { OkPage } from './OkPage.js';
-import { BadPage } from './BadPage.js';
+import { OkPage } from './pages/status/OkPage.js';
+import { BadPage } from './pages/status/BadPage.js';
 
 import { Ionicons } from '@expo/vector-icons';
 import LoginStore from './API/LoginStore.js';

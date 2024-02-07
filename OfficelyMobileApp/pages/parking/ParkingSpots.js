@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, ActivityIndicator, SafeAreaView, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/core';
-import { useStore } from './store';
+import { useStore } from '../../store.js';
 import { getCityAndCountry, getParkings, getParklyToken } from './ParkingSpots.hooks.js';
 
 const DATA = [

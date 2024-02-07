@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, Button, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import StarRating from 'react-native-star-rating';
-import { useStore } from './store';
-import OfficeStore from './API/OfficeStore';
+import { useStore } from '../../store';
+import OfficeStore from '../../API/OfficeStore';
 import { useNavigation } from '@react-navigation/native';
 
 const windowWidth = Dimensions.get('window').width;
@@ -47,7 +47,6 @@ export function OfferDetailsPage() {
     {offerData ? (
       <View style={styles.container}>
         <Image source={{ uri: offerData.mainPhoto }} style={styles.image} resizeMode='cover' />
-        <Image source={{ uri: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg' }} style={styles.image} resizeMode='cover' />
         <StarRating
           disabled={true}
           maxStars={5}

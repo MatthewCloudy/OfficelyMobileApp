@@ -3,11 +3,12 @@ import { View, TextInput, ScrollView, Image, Text, TouchableOpacity, StyleSheet,
 import StarRating from 'react-native-star-rating';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import CheckBox from 'expo-checkbox';
-import { useStore } from './store.js';
+import { useStore } from '../../store.js';
 import Collapsible from 'react-native-collapsible';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { querryOffices } from './API/OfficeStore';
+import { querryOffices } from '../../API/OfficeStore.js';
 import { useNavigation } from '@react-navigation/native';
+import SavedStore from '../../API/SavedStore.js';
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -299,7 +300,7 @@ export function SearchPage()  {
     <View style={styles.container}>
       <TouchableOpacity onPress={() => handleOfficeClick(item.id)}>
         <Image source={{ 
-          uri: 'https://img.freepik.com/free-photo/modern-office-space-with-desktops-with-modern-computers-created-with-generative-ai-technology_185193-110089.jpg' }} style={styles.image} />
+          uri: item.mainPhoto }} style={styles.image} />
         <StarRating
           disabled={true}
           maxStars={5}
@@ -310,7 +311,7 @@ export function SearchPage()  {
         <Text style={styles.name}>{item.name}</Text>
         <Text>{item.address}</Text>
         <Text>{`Price: ${item.pricePerDay} / day`}</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => SavedStore.getState().saveOffice(item.id)}>
           <Text>Add to Favorites / Remove from Favorites</Text>
         </TouchableOpacity>
       </TouchableOpacity>

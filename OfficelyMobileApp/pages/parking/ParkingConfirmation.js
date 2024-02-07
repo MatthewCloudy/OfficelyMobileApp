@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { useStore } from './store.js';
-import LoginStore from "./API/LoginStore.js"
+import { useStore } from '../../store.js';
+import LoginStore from "../../API/LoginStore.js"
 
 export function ParkingConfirmation() {
     const navigation = useNavigation();

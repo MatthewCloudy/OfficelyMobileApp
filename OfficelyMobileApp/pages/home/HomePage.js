@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, ImageBackground } from 'react-native';
-import { useStore } from './store';
+import { useStore } from '../../store';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import MapView, { Marker } from 'react-native-maps';
-import LoginStore from './API/LoginStore';
+import LoginStore from '../../API/LoginStore';
 
-const image = require('./assets/officePicture.jpg');
+const image = require('../../assets/officePicture.jpg');
 
 export function HomePage() {
   const navigation = useNavigation();
